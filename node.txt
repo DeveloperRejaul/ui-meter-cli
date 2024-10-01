@@ -1,0 +1,3 @@
+local install this project: npm link; run this command in root dir
+install package in example dir : run : npm link ui-meter-cli
+

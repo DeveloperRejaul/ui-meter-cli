@@ -1,6 +1,42 @@
 {
   "name": "ui-meter-cli",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx ts-node src/index.ts",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.7.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.2"
+  },
+  "directories": {
+    "dist": "dist`"
+  },
+  "author": "Rejaul Karim",
+  "bugs": {
+    "url": "https://github.com/DeveloperRejaul/ui-meter-cli/issues"
+  },
+  "keywords": [
+    "ui-meter-cli",
+    "Compiler"
+  ],
+  "homepage": "https://github.com/DeveloperRejaul/ui-meter-cli#readme",
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeveloperRejaul/ui-meter-cli.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false
 }
