@@ -1,6 +1,6 @@
 {
-  "name": "meter",
-  "version": "1.0.0",
+  "name": "rn-meter",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "cjs": "node dist/index.js"
   },
   "bin": {
-    "hello": "./dist/index.js"
+    "rn-meter": "./dist/index.js"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
