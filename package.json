@@ -1,15 +1,20 @@
 {
-  "name": "ui-meter-cli",
+  "name": "meter",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "start": "npx ts-node src/index.ts",
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean"
+    "build": "tsup src/index.ts --format cjs --dts --clean",
+    "cjs": "node dist/index.js"
+  },
+  "bin": {
+    "hello": "./dist/index.js"
   },
   "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "^9.0.7",
     "@types/node": "^22.7.4",
     "ts-node": "^10.9.2",
     "tslib": "^2.7.0",
@@ -38,5 +43,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "private": false
+  "private": false,
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^11.1.0"
+  }
 }

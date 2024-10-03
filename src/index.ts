@@ -1,3 +1,2 @@
-export const hello = () => {
-    console.log('hello world !');
-}
+import Meter from "./meter";
+new Meter()
