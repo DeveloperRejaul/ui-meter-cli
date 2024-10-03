@@ -7,13 +7,16 @@
   "scripts": {
     "start": "npx ts-node src/index.ts",
     "build": "tsup src/index.ts --format cjs --dts --clean",
-    "cjs": "node dist/index.js"
+    "cjs": "node dist/index.js",
+    "test": "yarn build && npm link"
   },
   "bin": {
     "rn-meter": "./dist/index.js"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
+    "@types/figlet": "^1.5.8",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^22.7.4",
     "ts-node": "^10.9.2",
@@ -45,7 +48,10 @@
   },
   "private": false,
   "dependencies": {
+    "chalk": "4.1.2",
     "commander": "^12.1.0",
-    "inquirer": "^11.1.0"
+    "figlet": "^1.7.0",
+    "inquirer": "^11.1.0",
+    "ora-classic": "^5.4.2"
   }
 }

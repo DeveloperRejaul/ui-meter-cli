@@ -1,12 +1,16 @@
-#!/usr/bin/env node
-
 import { Command } from 'commander'
 import fs from 'node:fs/promises';
 import inquirer from 'inquirer';
-import { } from 'node:child_process'
+import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { configContent } from './content';
+import { buttonContent, configContent } from './content';
+import figlet from 'figlet'
+import chalk from 'chalk';
+import ora from 'ora-classic';
+import path from 'node:path';
+import { existsSync } from 'node:fs';
+
 
 export default class Meter {
     private program: Command
@@ -43,7 +47,22 @@ export default class Meter {
         const existsConfig = await this.checkConfigFileExists();
 
         // crete config file
-        if (!existsConfig) await this.creteConfig()
+        if (!existsConfig) {
+            await this.creteConfig();
+            await this.creteNecessaryFolder()
+        }
+
+        // install dependencies library ui-meter and react-native-svg
+        const spinier = ora(`Loading ${chalk.blue('Installing dependencies...')}`).start()
+
+        exec('npm install ui-meter react-native-svg --save', (error: ExecException | null, stdout: string, stderr: string) => {
+            if (error) {
+                // print error
+                spinier.fail(chalk.red(error.message))
+            };
+            // print success log 
+            spinier.succeed(chalk.green('Done all task')).stop()
+        })
 
     }
 
@@ -51,7 +70,24 @@ export default class Meter {
      * @description this method used for add button components
      * @param
      */
-    async button() { }
+    async button() {
+        const configExists = await this.checkConfigFileExists();
+        // check if the config file exists
+        if (!configExists) {
+            console.log(chalk.red('Config file does not exist'));
+            console.log(chalk.green('Run: `npx rn-meter init`'));
+            return
+        }
+
+        const config = await this.getConfig();
+        const isTs = await this.checkIsTsProject()
+        const btnPath = path.join(process.cwd(), config.path.components, `button.${isTs ? 'tsx' : 'jsx'}`)
+        if (existsSync(btnPath)) {
+            console.log("Button already exists if you overwrite");
+            return
+        }
+        await fs.writeFile(btnPath, buttonContent())
+    }
 
 
     /***********************************************************************************************
@@ -72,15 +108,14 @@ export default class Meter {
     async checkConfigFileExists() {
         // get project configuration files 
         const files = await fs.readdir(process.cwd())
-        const isTs = await this.checkIsTsProject();
 
         // detect project ts or js 
-        return files.includes(`ui-meter.config.${isTs ? 'ts' : 'js'}`)
+        return files.includes('meter.config.json')
     }
 
     async creteConfig() {
-        const isTs = await this.checkIsTsProject();
 
+        console.log(figlet.textSync("RN METER CLI", { horizontalLayout: "full" }));
         // path input 
         const ans = await inquirer.prompt([
             {
@@ -96,6 +131,32 @@ export default class Meter {
                 default: "./meter/utils"
             },
         ])
-        await fs.writeFile(`ui-meter.config.${isTs ? 'ts' : 'js'}`, configContent({ components_path: ans.components_path, utils_path: ans.utils_path }))
+        await fs.writeFile(`meter.config.json`, configContent({ components_path: ans.components_path, utils_path: ans.utils_path }))
+    }
+
+    async getConfig() {
+        const config = await fs.readFile(path.join(process.cwd(), 'meter.config.json'), 'utf-8');
+        return JSON.parse(config);
+    }
+
+    async createFolder(destination: string) {
+        let pt = process.cwd();
+        for (const element of destination.split('/')) {
+            pt = path.join(pt, element)
+            if (!existsSync(pt)) {
+                await fs.mkdir(pt)
+            }
+        }
+    }
+
+    async creteNecessaryFolder() {
+        const config = await this.getConfig();
+        const componentsPath = path.join(process.cwd(), config.path.components);
+        const utilsPath = path.join(process.cwd(), config.path.utils);
+        const isFileExitsComponents = existsSync(componentsPath);
+        const isFileExitsUtils = existsSync(utilsPath);
+
+        if (!isFileExitsComponents) await this.createFolder(config.path.components)
+        if (!isFileExitsUtils) await this.createFolder(config.path.utils)
     }
 }
