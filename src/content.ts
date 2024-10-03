@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import type { IConfigContent } from "./types"
 
 export const configContent = (params: IConfigContent) => {
