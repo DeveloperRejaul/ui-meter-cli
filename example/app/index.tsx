@@ -4,9 +4,8 @@ import React from 'react'
 export default function Index() {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Button>
-                {/* <ButtonText>Hello</ButtonText> */}
-                <ButtonSpinner />
+            <Button variant='solid' >
+                <ButtonText>Hello</ButtonText>
             </Button>
         </View>
     )
@@ -15,7 +14,6 @@ export default function Index() {
 
 interface IButtonProps extends PressableProps, React.RefAttributes<View> {
     className?: string;
-    isLoading?: boolean;
     variant?: 'outline' | 'solid' | 'link',
     size?: number | 'xs' | 'sm' | 'md' | 'lg';
     action?: "primary" | "secondary" | "negative",

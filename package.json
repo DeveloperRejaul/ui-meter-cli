@@ -10,9 +10,7 @@
     "cjs": "node dist/index.js",
     "test": "yarn build && npm link"
   },
-  "bin": {
-    "rn-meter": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/commander": "^2.12.2",
@@ -46,12 +44,12 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "private": false,
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "inquirer": "^11.1.0",
     "ora-classic": "^5.4.2"
-  }
+  },
+  "packageManager": "yarn@3.6.4"
 }

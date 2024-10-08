@@ -5,7 +5,8 @@ export const configContent = (params: IConfigContent) => {
         "schema": "https://github.com/DeveloperRejaul/ui-meter",
         "path": {
             "components": params.components_path,
-            "utils": params.utils_path
+            "utils": params.utils_path,
+            'hook': params.hook_path,
         }
     }
     return JSON.stringify(config)
@@ -13,7 +14,6 @@ export const configContent = (params: IConfigContent) => {
 
 
 export const buttonContent = () => {
-
     const content = `import { StyleSheet, Text, View, Pressable, PressableProps, TextProps, ActivityIndicator, ActivityIndicatorProps } from 'react-native'
     import React from 'react'
 
@@ -69,4 +69,50 @@ export const buttonContent = () => {
 
 
     return content
+}
+
+
+
+export function configTheme(isExpo:boolean, fontPath:string) {
+    return `
+export const meterConfig = {
+    colors:{
+        'blue': '#1fb6ff',
+        'purple': '#7e5bef',
+        'pink': '#ff49db',
+        'orange': '#ff7849',
+        'green': '#13ce66',
+        'yellow': '#ffc82c',
+        'gray-dark': '#273444',
+        'gray': '#8492a6',
+        'gray-light': '#d3dce6',
+    },
+    ${isExpo ?  `fonts: {
+        // put heare your all fonts like this
+        SpaceMonoRegular: require('${fontPath}/SpaceMono-Regular.ttf'), // please replase corect path : this is just example
+    },` : ""}
+    
+    fontFamily:{
+        // also add all file name like this way
+        SPACEMONO_REGULAR:'SpaceMonoRegular',
+    },
+    spacing:{
+        '8xl': '96rem',
+        '9xl': '128rem',
+    },
+    borderRadius:{
+     '4xl': '2rem',
+    },
+}
+    `
+}
+
+export function reactNativeConfigContent (path:string) {
+  return `module.exports = {
+    project: {
+        ios: {},
+        android: {},
+    },
+    assets: ["${path}"],
+};`
 }
