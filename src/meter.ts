@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -29,6 +29,15 @@ export default class Meter {
             case Commands.Button:
                 this.button()
                 break;
+            case Commands.eslintSetup:
+                this.setupEslint()
+                break;
+            case Commands.themeSetup:
+                this.setupTheme()
+                break;
+            case Commands.vscodeConfigSetup:
+                this.setupVsCodeConfigForLint()
+                break;
             default:
                 break;
         }
@@ -49,7 +58,7 @@ export default class Meter {
         // if (!existsConfig) {
         // await this.creteConfig();
         // await this.creteNecessaryFolder()
-        await this.setupTheme()
+        // await this.setupTheme()
         // await this.install('npm install react-native-svg --save')
         // }
     }
@@ -74,21 +83,6 @@ export default class Meter {
         await fs.writeFile(btnPath, buttonContent())
     }
 
-
-    /***********************************************************************************************
-     *@description Here all utility methods are available
-     ************************************************************************************************/
-
-    /**
-     * @description this method used check project configuration ts or js
-     * @returns boolean
-     */
-    async checkIsTsProject() {
-        // get project configuration files 
-        const files = await fs.readdir(process.cwd())
-        // detect project ts or js 
-        return files.includes('tsconfig.json')
-    }
 
     /**
      * @description this function using for setup theme
@@ -127,6 +121,71 @@ export default class Meter {
             await fs.writeFile(`meter.config.${isTS ? 'ts' : 'js'}`, await configTheme(isExpo, fontPath.font_path))
         }
     }
+
+
+
+    /**
+     * @description this function using for setup eslint , and also vs code config
+     * 
+     */
+    async setupEslint() {
+        const isTs = await this.checkIsTsProject();
+
+        const spinier = ora(chalk.blue("Setup Eslint in you expo project. please wait ")).start()
+        await this.install('npm install --save-dev eslint@^8.2.0')
+        await this.install('npm install --save-dev eslint-config-airbnb@^19.0.4')
+        await this.install('npm install --save-dev eslint-plugin-import@^2.25.3')
+        await this.install('npm install --save-dev eslint-plugin-jsx-a11y@^6.5.1')
+        await this.install('npm install --save-dev eslint-plugin-react@^7.28.0')
+        await this.install('npm install --save-dev eslint-plugin-react-hooks@^4.3.0')
+        if (isTs) {
+            await this.install('npm install --save-dev @typescript-eslint/eslint-plugin@^8.8.1')
+            await this.install('npm install --save-dev @typescript-eslint/parser@^8.8.1')
+        }
+        spinier.succeed(chalk.green('Done installing task in your project')).stop()
+
+        chalk.blue("Creating Eslint config file please wait")
+        await fs.writeFile(`.eslintrc.json`, eslintConfigContent());
+
+        chalk.blue("Congratulation eslint setup done");
+
+        const ans = await inquirer.prompt([
+            {
+                type: "confirm",
+                message: "Are you sure to setup config vscode in your project",
+                name: "vscode"
+            }
+        ]);
+        if (ans.vscode) await this.setupVsCodeConfigForLint()
+    }
+
+
+    /**
+     * @description this function using for setup vs code config
+     */
+    async setupVsCodeConfigForLint() {
+        await fs.mkdir('.vscode');
+        const vsPath = path.join('.vscode', "settings.json")
+        await fs.writeFile(vsPath, vscodeJsonContent())
+    }
+
+
+    /***********************************************************************************************
+     *@description Here all utility methods are available
+     ************************************************************************************************/
+
+    /**
+     * @description this method used check project configuration ts or js
+     * @returns boolean
+     */
+    async checkIsTsProject() {
+        // get project configuration files 
+        const files = await fs.readdir(process.cwd())
+        // detect project ts or js 
+        return files.includes('tsconfig.json')
+    }
+
+
 
     /**
      * @description this finction useing for check config file exists in project  
@@ -228,7 +287,7 @@ export default class Meter {
      */
     async install(command: string) {
         return new Promise((res, rej) => {
-            const spinier = ora(`Loading ${chalk.blue(`Installing ${command.split(" ").pop()}`)}`).start()
+            const spinier = ora(chalk.blue(`Installing ${command.split(" ").pop()}`)).start()
             exec(command, (error: ExecException | null, stdout: string, stderr: string) => {
                 if (error) {
                     // print error
@@ -236,7 +295,7 @@ export default class Meter {
                     rej()
                 };
                 // print success log 
-                spinier.succeed(chalk.green('Done all task')).stop()
+                spinier.succeed(chalk.green('Done task')).stop()
                 res(null)
             })
         });

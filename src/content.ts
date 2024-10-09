@@ -103,7 +103,7 @@ export const meterConfig = {
         'gray': '#8492a6',
         'gray-light': '#d3dce6',
     },
-    fonts:${{...fonts}},
+    fonts:${{ ...fonts }},
     fontFamily:${JSON.stringify(fontFamily)},
     spacing:{
         '8xl': '96rem',
@@ -124,4 +124,80 @@ export function reactNativeConfigContent(path: string) {
     },
     assets: ["${path}"],
 };`
+}
+
+
+export function eslintConfigContent() {
+    return `
+{
+    "extends": [
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "react"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "import/no-unresolved": 0,
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        ],
+        "no-use-before-define": "off",
+        "import/extensions": [
+            "error",
+            "never"
+        ],
+        "react/prop-types": 0,
+        "no-shadow": "off",
+        "max-len":"off",
+        "react/react-in-jsx-scope":"off"
+    }
+}
+    
+    `
+}
+
+export function vscodeJsonContent() {
+    return `
+    {
+    "files.autoSave": "onFocusChange",
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "actualy"
+    ]
+}
+    
+    `
 }
