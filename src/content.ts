@@ -1,4 +1,6 @@
-import type { IConfigContent } from "./types"
+import type { IConfigContent } from "./types";
+import fs from 'fs/promises';
+import path from 'path'
 
 export const configContent = (params: IConfigContent) => {
     const config = {
@@ -73,7 +75,21 @@ export const buttonContent = () => {
 
 
 
-export function configTheme(isExpo:boolean, fontPath:string) {
+export async function configTheme(isExpo: boolean, fontPath: string) {
+
+
+    const fontName = await fs.readdir(path.join(process.cwd(), fontPath))
+    const fonts: { [keyof: string]: string } = {};
+    const fontFamily: { [keyof: string]: string } = {};
+
+    fontName.forEach((name, index) => {
+        const key = name.split('.')[0].replace('-', "")
+        fonts[key] = `require(${fontPath}/${name})`
+        fontFamily[key.toUpperCase()] = key
+    });
+
+
+
     return `
 export const meterConfig = {
     colors:{
@@ -87,15 +103,8 @@ export const meterConfig = {
         'gray': '#8492a6',
         'gray-light': '#d3dce6',
     },
-    ${isExpo ?  `fonts: {
-        // put heare your all fonts like this
-        SpaceMonoRegular: require('${fontPath}/SpaceMono-Regular.ttf'), // please replase corect path : this is just example
-    },` : ""}
-    
-    fontFamily:{
-        // also add all file name like this way
-        SPACEMONO_REGULAR:'SpaceMonoRegular',
-    },
+    fonts:${{...fonts}},
+    fontFamily:${JSON.stringify(fontFamily)},
     spacing:{
         '8xl': '96rem',
         '9xl': '128rem',
@@ -107,8 +116,8 @@ export const meterConfig = {
     `
 }
 
-export function reactNativeConfigContent (path:string) {
-  return `module.exports = {
+export function reactNativeConfigContent(path: string) {
+    return `module.exports = {
     project: {
         ios: {},
         android: {},

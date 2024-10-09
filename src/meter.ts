@@ -44,14 +44,14 @@ export default class Meter {
      * @param
      */
     async init() {
-        const existsConfig = await this.checkConfigFileExists();
+        // const existsConfig = await this.checkConfigFileExists();
         // crete config file
-        if (!existsConfig) {
-            await this.creteConfig();
-            await this.creteNecessaryFolder()
-            await this.setupTheme()
-            // await this.install('npm install react-native-svg --save')
-        }
+        // if (!existsConfig) {
+        // await this.creteConfig();
+        // await this.creteNecessaryFolder()
+        await this.setupTheme()
+        // await this.install('npm install react-native-svg --save')
+        // }
     }
 
     /**
@@ -70,10 +70,7 @@ export default class Meter {
         const config = await this.getConfig();
         const isTs = await this.checkIsTsProject()
         const btnPath = path.join(process.cwd(), config.path.components, `button.${isTs ? 'tsx' : 'jsx'}`)
-        if (existsSync(btnPath)) {
-            console.log("Button already exists if you overwrite");
-            return
-        }
+        if (existsSync(btnPath)) return console.log("Button already exists if you overwrite");
         await fs.writeFile(btnPath, buttonContent())
     }
 
@@ -116,18 +113,18 @@ export default class Meter {
                     type: "input",
                     message: "Please gave me you font path",
                     name: "font_path",
-                    default:"./assets/fonts"
+                    default: "./assets/fonts"
                 }
             ])
             if (isExpo) {
-                await this.install('npm install expo-font');
+                // await this.install('npm install expo-font');
             } else {
-                await fs.writeFile('react-native.config.js', reactNativeConfigContent(fontPath.font_path))
-                await this.executeNpx('npx react-native-asset')
+                // await fs.writeFile('react-native.config.js', reactNativeConfigContent(fontPath.font_path))
+                // await this.executeNpx('npx react-native-asset')
             }
 
             // setup theme in project 
-            await fs.writeFile(`meter.config.${isTS ? 'ts' : 'js'}`, configTheme(isExpo, fontPath.font_path))
+            await fs.writeFile(`meter.config.${isTS ? 'ts' : 'js'}`, await configTheme(isExpo, fontPath.font_path))
         }
     }
 
@@ -194,9 +191,7 @@ export default class Meter {
         let pt = process.cwd();
         for (const element of destination.split('/')) {
             pt = path.join(pt, element)
-            if (!existsSync(pt)) {
-                await fs.mkdir(pt)
-            }
+            if (!existsSync(pt)) await fs.mkdir(pt)
         }
     }
 
@@ -250,22 +245,21 @@ export default class Meter {
     /**
      *  @description this functiion useing exicute npx command
      */
-    async executeNpx (command:string) {
+    async executeNpx(command: string) {
         return new Promise((res, rej) => {
             const spinier = ora(`Loading ${chalk.blue(`Exexute: ${command}`)}`).start()
             exec(command, (error: ExecException | null, stdout: string, stderr: string) => {
-               if(error){
-                console.log(error);
-                spinier.fail(chalk.red(error.message)).stop()
-                rej()
-               };
-               console.log(stdout);
-               console.log(stderr);
-               spinier.succeed(chalk.green('Done all task')).stop()
-               res(null)
-               
+                if (error) {
+                    console.log(error);
+                    spinier.fail(chalk.red(error.message)).stop()
+                    rej()
+                };
+                console.log(stdout);
+                console.log(stderr);
+                spinier.succeed(chalk.green('Done all task')).stop()
+                res(null)
             })
         })
-    } 
+    }
 
 }
