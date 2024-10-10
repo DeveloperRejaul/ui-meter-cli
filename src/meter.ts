@@ -116,7 +116,7 @@ export default class Meter {
     async setupEslint() {
         const isTs = await this.checkIsTsProject();
 
-        const spinier = ora(chalk.blue("Setup Eslint in you expo project. please wait ")).start()
+        const spinier = ora(chalk.blue("Setup Eslint in your project. please wait ")).start()
         await this.install('npm install --save-dev eslint@^8.2.0')
         await this.install('npm install --save-dev eslint-config-airbnb@^19.0.4')
         await this.install('npm install --save-dev eslint-plugin-import@^2.25.3')
