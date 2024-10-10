@@ -62,7 +62,7 @@ export default class Meter {
             await this.creteConfig();
             await this.creteNecessaryFolder()
             await this.setupTheme()
-            await this.install('npm install ui-meter react-native-svg --save')
+            await this.install('npm install react-native-svg --save')
         } else {
             chalk.blue('Already initialized ')
         }
