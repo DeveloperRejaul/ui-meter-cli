@@ -11,7 +11,9 @@ export const meterConfig = {
         'gray': '#8492a6',
         'gray-light': '#d3dce6',
     },
-    fonts:{"SpaceMonoRegular":"require(./assets/fonts/SpaceMono-Regular.ttf)"},
+   fonts:{
+        'SpaceMonoRegular': require('./assets/fonts/SpaceMono-Regular.ttf')
+    },
     fontFamily:{"SPACEMONOREGULAR":"SpaceMonoRegular"},
     spacing:{
         '8xl': '96rem',

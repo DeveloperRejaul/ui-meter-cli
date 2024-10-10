@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -27,7 +27,10 @@ export default class Meter {
                 this.init()
                 break;
             case Commands.Button:
-                this.button()
+                this.createComponent(buttonContent(), "Button")
+                break;
+            case Commands.Carousal:
+                this.createComponent(cardCarousalContent(), "Carousal")
                 break;
             case Commands.eslintSetup:
                 this.setupEslint()
@@ -53,34 +56,16 @@ export default class Meter {
      * @param
      */
     async init() {
-        // const existsConfig = await this.checkConfigFileExists();
+        const existsConfig = await this.checkConfigFileExists();
         // crete config file
-        // if (!existsConfig) {
-        // await this.creteConfig();
-        // await this.creteNecessaryFolder()
-        // await this.setupTheme()
-        // await this.install('npm install react-native-svg --save')
-        // }
-    }
-
-    /**
-     * @description this method used for add button components
-     * @param
-     */
-    async button() {
-        const configExists = await this.checkConfigFileExists();
-        // check if the config file exists
-        if (!configExists) {
-            console.log(chalk.red('Config file does not exist'));
-            console.log(chalk.green('Run: `npx rn-meter init`'));
-            return
+        if (!existsConfig) {
+            await this.creteConfig();
+            await this.creteNecessaryFolder()
+            await this.setupTheme()
+            await this.install('npm install ui-meter react-native-svg --save')
+        } else {
+            chalk.blue('Already initialized ')
         }
-
-        const config = await this.getConfig();
-        const isTs = await this.checkIsTsProject()
-        const btnPath = path.join(process.cwd(), config.path.components, `button.${isTs ? 'tsx' : 'jsx'}`)
-        if (existsSync(btnPath)) return console.log("Button already exists if you overwrite");
-        await fs.writeFile(btnPath, buttonContent())
     }
 
 
@@ -88,12 +73,12 @@ export default class Meter {
      * @description this function using for setup theme
      */
     async setupTheme() {
-        // creating theme configaration fiile 
+        // creating theme configuration file 
         const isTS = await this.checkIsTsProject();
         const isExpo = await this.checkIsExpoProject();
 
         // setup font in project
-        console.log(chalk.green('Setup theme in project, like font, color, border radius, gap, spase,  etc'));
+        console.log(chalk.green('Setup theme in project, like font, color, border radius, gap, space,  etc'));
         const themeAns = await inquirer.prompt([
             {
                 type: "confirm",
@@ -111,10 +96,10 @@ export default class Meter {
                 }
             ])
             if (isExpo) {
-                // await this.install('npm install expo-font');
+                await this.install('npm install expo-font');
             } else {
-                // await fs.writeFile('react-native.config.js', reactNativeConfigContent(fontPath.font_path))
-                // await this.executeNpx('npx react-native-asset')
+                await fs.writeFile('react-native.config.js', reactNativeConfigContent(fontPath.font_path))
+                await this.executeNpx('npx react-native-asset')
             }
 
             // setup theme in project 
@@ -188,7 +173,7 @@ export default class Meter {
 
 
     /**
-     * @description this finction useing for check config file exists in project  
+     * @description this function using for check config file exists in project  
      * @returns boolean data 
      */
     async checkConfigFileExists() {
@@ -233,7 +218,7 @@ export default class Meter {
     }
 
     /**
-     * @description this function useing for get config information 
+     * @description this function using for get config information 
      * @returns config file information 
      */
     async getConfig() {
@@ -243,7 +228,7 @@ export default class Meter {
 
 
     /**
-     * @description this function useing for createing folder 
+     * @description this function using for creating folder 
      * @param destination path like : src/components/etc
      */
     async createFolder(destination: string) {
@@ -256,7 +241,7 @@ export default class Meter {
 
 
     /**
-    * @description this funtion use for create folder when init command exicute 
+    * @description this function use for create folder when init command execute 
      */
     async creteNecessaryFolder() {
         const config = await this.getConfig();
@@ -270,9 +255,9 @@ export default class Meter {
     }
 
     /**
-     * @description this funtion use for checking is expo project or native cli project;
+     * @description this function use for checking is expo project or native cli project;
      * if return true :this project is expo project S
-     * if return is false : this project is not expo projcct. this is cli project or anythig else
+     * if return is false : this project is not expo project. this is cli project or anything else
      * @returns boolean data 
      */
     async checkIsExpoProject() {
@@ -302,7 +287,7 @@ export default class Meter {
     }
 
     /**
-     *  @description this functiion useing exicute npx command
+     *  @description this function using execute npx command
      */
     async executeNpx(command: string) {
         return new Promise((res, rej) => {
@@ -321,4 +306,32 @@ export default class Meter {
         })
     }
 
+
+    /**
+   *  @description this function using for checking configuration file exists 
+   */
+    async checkConfigExists() {
+        const configExists = await this.checkConfigFileExists();
+        // check if the config file exists
+        if (!configExists) {
+            console.log(chalk.red('Config file does not exist'));
+            console.log(chalk.green('Run: `npx rn-meter init`'));
+            return false
+        }
+        return true
+    }
+
+    /**
+     * @description this function using for creating components 
+     */
+    async createComponent(content: string, componentName: string) {
+        const isConfigExists = await this.checkConfigExists()
+        if (isConfigExists) {
+            const config = await this.getConfig();
+            const isTs = await this.checkIsTsProject()
+            const componentPath = path.join(process.cwd(), config.path.components, `${componentName}.${isTs ? 'tsx' : 'jsx'}`)
+            if (existsSync(componentPath)) return console.log("Button already exists if you overwrite");
+            await fs.writeFile(componentPath, content);
+        }
+    }
 }
