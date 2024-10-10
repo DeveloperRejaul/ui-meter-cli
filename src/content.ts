@@ -166,8 +166,10 @@ export function eslintConfigContent() {
         ],
         "react/prop-types": 0,
         "no-shadow": "off",
-        "max-len":"off",
-        "react/react-in-jsx-scope":"off"
+        "max-len": "off",
+        "react/react-in-jsx-scope": "off",
+        "object-curly-newline": "off",
+        "react/no-unused-prop-types":1
     }
 }
     
@@ -176,8 +178,9 @@ export function eslintConfigContent() {
 
 export function vscodeJsonContent() {
     return `
-    {
+   {
     "files.autoSave": "onFocusChange",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript]": {
         "editor.formatOnSave": true
     },
