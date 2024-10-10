@@ -6,7 +6,7 @@ Introducing our comprehensive React Native UI library, designed to streamline yo
 ## Initialize cli configuration  
 
 ```sh
-npx meter init
+npx rn-meter init
 ```
 
 ## Features
@@ -55,21 +55,21 @@ npx meter init
 ### Theme Setup
 This Command setup your theme related configuration. Like Font, color, radius, etc, also create a meter.config file . You can customize all of this. 
 ```
-npx meter setup theme
+npx rn-meter setup theme
 ```
 
 ### Eslint Setup
 We are flowing Airbnb style. you can also customize all of role in .eslintrc.json file.
 
 ```
-npx meter setup eslint
+npx rn-meter setup eslint
 ```
 
 ### Vs code configuration file Setup
 This setup for customizing vs code editor. we can fix all of linting related error passing ctrl+s 
 
 ```
-npx meter setup vscode
+npx rn-meter setup vscode
 ```
 
 ## Components
@@ -78,7 +78,7 @@ Introducing our comprehensive React Native UI library with customizable themes, 
 
 #### Button
 ```
-npx meter add button 
+npx rn-meter add button 
 ```
 
 #### Carousal
