@@ -22,7 +22,7 @@ npx rn-meter init
 
 - [Installation](#initialize-cli-configuration)
 - [Configuration](#configuration)
-    - [theme Setup](#theme-setup)
+    - [Theme Setup](#theme-setup)
     - [Eslint Setup](#eslint-setup)
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
 
