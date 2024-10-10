@@ -24,7 +24,7 @@ npx rn-meter init
 - [Configuration](#configuration)
     - [theme Setup](#theme-setup)
     - [Eslint Setup](#eslint-setup)
-    - [Vs code configuration Setup](#vs-code-configaration-setup)
+    - [Vs Code Configuration Setup](#vs-code-configuration-setup)
 
 - [Components](#components)
   - [Layout](#layout)
@@ -65,7 +65,7 @@ We are flowing Airbnb style. you can also customize all of role in .eslintrc.jso
 npx rn-meter setup eslint
 ```
 
-### Vs code configuration file Setup
+### Vs Code Configuration Setup
 This setup for customizing vs code editor. we can fix all of linting related error passing ctrl+s 
 
 ```
@@ -83,7 +83,7 @@ npx rn-meter add button
 
 #### Carousal
 ```
-npx meter add carousal 
+npx rn-meter add carousal 
 ```
 
 
