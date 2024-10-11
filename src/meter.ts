@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -31,6 +31,9 @@ export default class Meter {
                 break;
             case Commands.Carousal:
                 this.createComponent(cardCarousalContent(), "Carousal")
+                break;
+            case Commands.Radio:
+                this.createComponent(radioContent(), "Radio")
                 break;
             case Commands.eslintSetup:
                 this.setupEslint()
@@ -332,6 +335,9 @@ export default class Meter {
             const componentPath = path.join(process.cwd(), config.path.components, `${componentName}.${isTs ? 'tsx' : 'jsx'}`)
             if (existsSync(componentPath)) return console.log("Button already exists if you overwrite");
             await fs.writeFile(componentPath, content);
+        } else {
+            console.log(chalk.red("Library configuration not exists"));
+            console.log(chalk.blue("Run: npx rn-meter init "));
         }
     }
 }

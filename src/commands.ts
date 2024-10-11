@@ -4,6 +4,7 @@ export enum Commands {
     // Components related command
     Button = 'add-button',
     Carousal = "add-carousal",
+    Radio = "add-radio",
 
     // setup related command
     themeSetup = 'setup-theme',

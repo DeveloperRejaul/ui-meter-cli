@@ -81,6 +81,11 @@ Introducing our comprehensive React Native UI library with customizable themes, 
 npx rn-meter add button 
 ```
 
+#### Radio
+```
+npx rn-meter add radio 
+```
+
 #### Carousal
 ```
 npx rn-meter add carousal 
