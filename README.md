@@ -43,6 +43,9 @@ npx rn-meter init
     - [Switch](#switch)
     - [Input](#input)
   - [Carousal](#carousal)
+- [Utils Function](#utils-function)
+  - [Random](#random-id-generator-function)
+  - [Color Opacity reducer](#color-opacity-reducer-function)
 - [Contributing](#contributing)
 - [Support](#support)
 - [Feedback](#feedback)
@@ -76,7 +79,7 @@ This setup for customizing vs code editor. we can fix all of linting related err
 Before running this command, you **MUST** remove all vs code-related configuration files like `.vscode/settings.json ` . Failure to do so **WILL** cause issues in your project. Proceed with caution!
 
 ```
-npx rn-meter setup vscode
+npx rn-meter setup vscode config
 ```
 
 ## Components
@@ -98,6 +101,19 @@ npx rn-meter add radio
 npx rn-meter add carousal 
 ```
 
+## Utils Function
+
+#### Random Id Generator Function
+This function using for create random string id generation 
+```
+npx rn-meter add add fn random
+```
+
+#### Color Opacity Reducer Function
+This function using for reducing color opacity
+```
+npx rn-meter add add fn cor
+```
 
 ## Contributing
 

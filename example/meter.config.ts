@@ -1,26 +1,34 @@
-
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable global-require */
+/* eslint-disable @typescript-eslint/no-require-imports */
 export const meterConfig = {
-    colors:{
-        'blue': '#1fb6ff',
-        'purple': '#7e5bef',
-        'pink': '#ff49db',
-        'orange': '#ff7849',
-        'green': '#13ce66',
-        'yellow': '#ffc82c',
-        'gray-dark': '#273444',
-        'gray': '#8492a6',
-        'gray-light': '#d3dce6',
+  colors: {
+    dark: {
+      primary: '#1E88E5',
+      secondary: '#8E24AA',
+      positive: '#43A047',
+      negative: '#D32F2F',
+      error: '#E53935',
+      warning: '#FB8C00',
     },
-   fonts:{
-        'SpaceMonoRegular': require('./assets/fonts/SpaceMono-Regular.ttf')
+    light: {
+      primary: '#2196F3',
+      secondary: '#AB47BC',
+      positive: '#66BB6A',
+      negative: '#E57373',
+      error: '#EF5350',
+      warning: '#FFA726',
     },
-    fontFamily:{"SPACEMONOREGULAR":"SpaceMonoRegular"},
-    spacing:{
-        '8xl': '96rem',
-        '9xl': '128rem',
-    },
-    borderRadius:{
-     '4xl': '2rem',
-    },
-}
-    
+  },
+  fonts: {
+    SpaceMonoRegular: require('./assets/fonts/SpaceMono-Regular.ttf'),
+  },
+  fontFamily: { SPACEMONOREGULAR: 'SpaceMonoRegular' },
+  spacing: {
+    '8xl': '96rem',
+    '9xl': '128rem',
+  },
+  borderRadius: {
+    '4xl': '2rem',
+  },
+};

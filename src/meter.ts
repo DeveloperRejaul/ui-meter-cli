@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -43,6 +43,12 @@ export default class Meter {
                 break;
             case Commands.vscodeConfigSetup:
                 this.setupVsCodeConfigForLint()
+                break;
+            case Commands.colorOpacityReduce:
+                this.createUtility(colorReduceOpacity(), 'colorReduceOpacity');
+                break;
+            case Commands.random:
+                this.createUtility(random(), 'random');
                 break;
             default:
                 break;
@@ -333,7 +339,25 @@ export default class Meter {
             const config = await this.getConfig();
             const isTs = await this.checkIsTsProject()
             const componentPath = path.join(process.cwd(), config.path.components, `${componentName}.${isTs ? 'tsx' : 'jsx'}`)
-            if (existsSync(componentPath)) return console.log("Button already exists if you overwrite");
+            if (existsSync(componentPath)) return console.log(`${componentName} already exists if you overwrite`);
+            await fs.writeFile(componentPath, content);
+        } else {
+            console.log(chalk.red("Library configuration not exists"));
+            console.log(chalk.blue("Run: npx rn-meter init "));
+        }
+    }
+
+    /**
+     * @description this function using for creating utils function 
+     */
+
+    async createUtility(content: string, name: string) {
+        const isConfigExists = await this.checkConfigExists();
+        if (isConfigExists) {
+            const config = await this.getConfig();
+            const isTs = await this.checkIsTsProject()
+            const componentPath = path.join(process.cwd(), config.path.utils, `${name}.${isTs ? 'ts' : 'js'}`)
+            if (existsSync(componentPath)) return console.log(`${name} already exists if you overwrite`);
             await fs.writeFile(componentPath, content);
         } else {
             console.log(chalk.red("Library configuration not exists"));

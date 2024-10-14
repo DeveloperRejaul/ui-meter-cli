@@ -9,5 +9,9 @@ export enum Commands {
     // setup related command
     themeSetup = 'setup-theme',
     eslintSetup = 'setup-eslint',
-    vscodeConfigSetup = 'setup vscode con1fig'
+    vscodeConfigSetup = 'setup-vscode-config',
+
+    //Utilities function 
+    random = "add-fn-random",
+    colorOpacityReduce = 'add-fn-cor'
 }

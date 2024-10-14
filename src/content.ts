@@ -15,57 +15,75 @@ export const configContent = (params: IConfigContent) => {
 }
 
 export const buttonContent = () => {
-  const content = `import { StyleSheet, Text, View, Pressable, PressableProps, TextProps, ActivityIndicator, ActivityIndicatorProps } from 'react-native'
-    import React from 'react'
+  const content = `  
+import { Pressable, Text, ViewStyle, StyleSheet, TextStyle, PressableProps } from 'react-native';
 
-    interface IButtonProps extends PressableProps, React.RefAttributes<View> {
-        className?: string;
-        isLoading?: boolean;
-        variant?: 'outline' | 'solid' | 'link',
-        size?: number | 'xs' | 'sm' | 'md' | 'lg';
-        action?: "primary" | "secondary" | "negative",
-        isHovered?: boolean;
-        isPressed?: boolean;
-        isFocused?: boolean;
-        isDisabled?: boolean;
-    }
-
-    interface IButtonText extends TextProps {
-        className?: string;
-    }
-
-    interface IActivityIndicator extends ActivityIndicatorProps {
-        className?: string;
-    }
-
-    interface IButtonIcon {
-        as: React.JSX.Element;
-    }
-
-
-    export function ButtonText(props: IButtonText) {
-        return <Text { ...props } > { props.children } </Text>
-    }
-
-    export function ButtonSpinner(props: IActivityIndicator) {
-        return <ActivityIndicator { ...props } />
+export interface IButton extends PressableProps {
+    text?:string
+    leftIcon?: React.JSX.Element
+    rightIcon?: React.JSX.Element
+    containerStyle?: ViewStyle;
+    textStyle?: TextStyle
+    variant?: 'solid' | 'outline' | 'link'
+    action?:'primary' | 'secondary' | 'positive' | 'negative'
+    isDisabled?:boolean;
 }
 
+export default function Button(props : IButton) {
+  const {
+    text = 'Hello World!',
+    containerStyle,
+    leftIcon,
+    rightIcon,
+    textStyle,
+    variant = 'solid',
+    action = 'primary',
+    isDisabled,
+  } = props;
 
-    export function ButtonIcon(props: IButtonIcon) {
-        return
-    }
+  const color = {
+    primary: '#1E88E5',
+    secondary: '#8E24AA',
+    positive: '#43A047',
+    negative: '#D32F2F',
+  };
 
-    export function Button(props: IButtonProps) {
-        return (
-            <Pressable { ...props } >
-            { props.children }
-            </Pressable>
-        )
-    }
+  const style = {
+    solid: {
+      backgroundColor: color[action],
+    },
+    outline: {
+      borderWidth: 1,
+      borderColor: color[action],
+    },
+    link: {},
+  };
 
+  return (
+    <Pressable
+      pointerEvents={isDisabled ? 'none' : 'auto'}
+      style={[styles.container, { opacity: isDisabled ? 0.5 : 1 }, style[variant], containerStyle]}
+      {...props}
+    >
+      {leftIcon}
+      <Text style={[styles.text, textStyle, variant === 'link' && { textDecorationLine: 'underline' }]}>{text}</Text>
+      {rightIcon}
+    </Pressable>
+  );
+}
 
-    const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 7,
+  },
+  text: {
+    fontWeight: '600',
+    fontSize: 14,
+  },
+});
 `
 
 
@@ -86,17 +104,24 @@ export async function configTheme(isExpo: boolean, fontPath: string) {
 
   return `
 export const meterConfig = {
-    colors:{
-        'blue': '#1fb6ff',
-        'purple': '#7e5bef',
-        'pink': '#ff49db',
-        'orange': '#ff7849',
-        'green': '#13ce66',
-        'yellow': '#ffc82c',
-        'gray-dark': '#273444',
-        'gray': '#8492a6',
-        'gray-light': '#d3dce6',
+    colors: {
+    dark: {
+      primary: '#1E88E5',
+      secondary: '#8E24AA',
+      positive: '#43A047',
+      negative: '#D32F2F',
+      error: '#E53935',
+      warning: '#FB8C00',
     },
+    light: {
+      primary: '#2196F3',
+      secondary: '#AB47BC',
+      positive: '#66BB6A',
+      negative: '#E57373',
+      error: '#EF5350',
+      warning: '#FFA726',
+    },
+  },
    fonts:{
         ${Object.keys(fonts)
       .map((key) => `'${key}': ${fonts[key]}`)
@@ -528,5 +553,46 @@ export function Radio(props:IRadioProps) {
   );
 }
   
+  `
+}
+
+export function colorReduceOpacity() {
+  return `
+  export function reduceColorOpacity(hex: string, opacityPercent: number) {
+    // Convert hex to RGB
+    const hexToRgb = (hex: string) => {
+        let trimmedHex = hex.replace('#', '');
+        if (trimmedHex.length === 3) {
+            trimmedHex = trimmedHex.split('').map((hexChar) => hexChar + hexChar).join('');
+        }
+        const bigint = parseInt(trimmedHex, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return { r, g, b };
+    };
+
+    // Convert opacity percent (0-100) to a range between 0 and 1
+    const opacity = Math.min(Math.max(opacityPercent, 0), 100) / 100;
+
+    const { r, g, b } = hexToRgb(hex);
+
+    // Return as RGBA string
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + opacity + ')';
+}
+  `
+}
+
+export function random() {
+  return `
+export const randomId = (length = 8) => {
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    id += charset[randomIndex];
+  }
+  return id;
+};
   `
 }
