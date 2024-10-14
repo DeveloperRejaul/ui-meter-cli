@@ -61,12 +61,19 @@ npx rn-meter setup theme
 ### Eslint Setup
 We are flowing Airbnb style. you can also customize all of role in .eslintrc.json file.
 
+⚠️ **WARNING: CRITICAL ACTION REQUIRED!** ⚠️  
+Before running this command, you **MUST** remove all ESLint-related configuration files like `.eslintrc.json` and uninstall all ESLint-related packages. Failure to do so **WILL** cause issues in your project. Proceed with caution!
+
+
 ```
 npx rn-meter setup eslint
 ```
 
 ### Vs Code Configuration Setup
 This setup for customizing vs code editor. we can fix all of linting related error passing ctrl+s 
+
+⚠️ **WARNING: CRITICAL ACTION REQUIRED!** ⚠️ 
+Before running this command, you **MUST** remove all vs code-related configuration files like `.vscode/settings.json ` . Failure to do so **WILL** cause issues in your project. Proceed with caution!
 
 ```
 npx rn-meter setup vscode
