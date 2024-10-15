@@ -1,11 +1,13 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { Center } from '../components/center';
-import { CheckBox } from '@/components/check-box';
+import { Provider } from 'react-redux';
+import { store } from '@/rtk/store';
+import Rtk from '@/components/rtk';
 
-export default function index() {
+export default function Index() {
   return (
-    <Center>
-      <CheckBox />
-    </Center>
+    <Provider store={store}>
+      <Rtk />
+    </Provider>
   );
 }

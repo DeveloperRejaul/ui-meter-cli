@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Pressable, Text, TextStyle, ViewProps, ViewStyle } from "react-native";
-
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/require-default-props */
+import React, { useState } from 'react';
+import { Pressable, Text, TextStyle, ViewProps, ViewStyle } from 'react-native';
 
 interface ICheckBox extends ViewProps {
     onChange?: (value: boolean) => void;
@@ -15,44 +17,43 @@ interface ICheckBox extends ViewProps {
     checkStyleClassName?: string;
 }
 
-
 export function CheckBox(props: ICheckBox) {
-    const {
-        defaultIsChecked = false,
-        isDisabled = false,
-        borderColor = "black",
-        size = 20,
-        checkIcon,
-        checkStyle,
-        boxStyle,
-        boxStyleClassName,
-        checkStyleClassName,
-        onChange,
-    } = props;
+  const {
+    defaultIsChecked = false,
+    isDisabled = false,
+    borderColor = 'black',
+    size = 20,
+    checkIcon,
+    checkStyle,
+    boxStyle,
+    boxStyleClassName,
+    checkStyleClassName,
+    onChange,
+  } = props;
 
-    const [select, setSelect] = useState<boolean>(defaultIsChecked)
+  const [select, setSelect] = useState<boolean>(defaultIsChecked);
 
-    return (
-        <Pressable
-            pointerEvents={isDisabled ? "none" : "auto"}
-            style={{
-                borderWidth: 1,
-                borderColor,
-                height: size,
-                width: size,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 3,
-                opacity: isDisabled ? 0.5 : 1,
-                ...boxStyle
-            }}
-            onPress={() => setSelect(pre => {
-                onChange?.(!pre)
-                return !pre
-            })}
-            {...{ className: boxStyleClassName }}
-        >
-            {select ? checkIcon ? checkIcon : <Text style={checkStyle} {...{ className: checkStyleClassName }}>✓</Text> : <></>}
-        </Pressable>
-    )
+  return (
+    <Pressable
+      pointerEvents={isDisabled ? 'none' : 'auto'}
+      style={{
+        borderWidth: 1,
+        borderColor,
+        height: size,
+        width: size,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 3,
+        opacity: isDisabled ? 0.5 : 1,
+        ...boxStyle,
+      }}
+      onPress={() => setSelect((pre) => {
+        onChange?.(!pre);
+        return !pre;
+      })}
+      {...{ className: boxStyleClassName }}
+    >
+      {select ? checkIcon || <Text style={checkStyle} {...{ className: checkStyleClassName }}>✓</Text> : <></>}
+    </Pressable>
+  );
 }
