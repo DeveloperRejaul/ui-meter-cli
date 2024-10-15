@@ -602,3 +602,116 @@ export const randomId = (length = 8) => {
 };
   `
 }
+
+export function box() {
+  return `  
+import React from "react";
+import { View, ViewProps } from "react-native";
+
+export interface IBox extends ViewProps {
+    className?: string
+}
+
+export function Box(props: IBox) {
+    return <View {...props} />
+}
+  
+`
+}
+
+export function center() {
+  return `
+import { ViewProps, View } from "react-native";
+
+interface ICenter extends ViewProps {
+    className?: string
+}
+
+export function Center(props: ICenter) {
+    return <View {...props} style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, props.style]} />
+}
+  `
+}
+
+export function divider() {
+  return `
+import { View, ViewProps } from "react-native";
+
+export interface IDivider extends ViewProps {
+    className?: string;
+    orientation?: "horizontal" | "vertical"
+    backgroundColor?: string;
+    m?: number
+}
+
+export default function Divider(props: IDivider) {
+    const {
+        orientation = "vertical",
+        backgroundColor = "#000",
+        m,
+    } = props;
+
+    const vm = orientation === "vertical" ? m : 0;
+    const hm = orientation === "horizontal" ? m : 0
+    const h = orientation === "horizontal" ? "100%" : 1;
+    const w = orientation === "vertical" ? null : 1;
+
+    return (
+        <View
+            {...props}
+            style={[{
+                height: h,
+                width: w,
+                backgroundColor,
+                marginVertical: vm,
+                marginHorizontal: hm,
+            }, props.style]}
+        />
+    );
+}
+  
+  `
+}
+
+export function HStackContent() {
+  return `
+import { View, ViewProps } from "react-native";
+
+export interface IHStack extends ViewProps {
+    space?: number;
+    reversed?: boolean;
+    className?: string
+}
+
+
+export function HStack(props: IHStack) {
+    const {
+        reversed = false,
+        space = 5,
+    } = props;
+    return <View {...props} style={[{ flexDirection: reversed ? "row-reverse" : "row", columnGap: space }, props.style]} />
+}
+  
+  `
+}
+
+export function VStackContent() {
+  return `
+import { View, ViewProps } from "react-native";
+
+interface IVStack extends ViewProps {
+    className?: string;
+    space?: number;
+    reversed?: boolean;
+}
+
+export function VStack(props: IVStack) {
+    const {
+        space = 5,
+        reversed = false
+    } = props;
+    return <View  {...props} style={[{ flexDirection: reversed ? "column-reverse" : "column", rowGap: space }, props.style]} />
+}
+  
+  `
+}

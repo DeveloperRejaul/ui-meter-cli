@@ -2,6 +2,11 @@ export enum Commands {
     Init = 'init',
 
     // Components related command
+    Box = "add-box",
+    Center = 'add-center',
+    Divider = "add-divider",
+    HStack = "add-HStack",
+    VStack = "add-VStack",
     Button = 'add-button',
     Carousal = "add-carousal",
     Radio = "add-radio",

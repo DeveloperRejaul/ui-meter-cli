@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -26,6 +26,22 @@ export default class Meter {
             case Commands.Init:
                 this.init()
                 break;
+            // components related command
+            case Commands.Box:
+                this.createComponent(box(), "Box")
+                break;
+            case Commands.Center:
+                this.createComponent(center(), "Center")
+                break;
+            case Commands.Divider:
+                this.createComponent(divider(), "Divider")
+                break;
+            case Commands.HStack:
+                this.createComponent(HStackContent(), "HStack")
+                break;
+            case Commands.VStack:
+                this.createComponent(VStackContent(), "VStack")
+                break;
             case Commands.Button:
                 this.createComponent(buttonContent(), "Button")
                 break;
@@ -35,6 +51,8 @@ export default class Meter {
             case Commands.Radio:
                 this.createComponent(radioContent(), "Radio")
                 break;
+
+            // setup related command
             case Commands.eslintSetup:
                 this.setupEslint()
                 break;
@@ -44,6 +62,8 @@ export default class Meter {
             case Commands.vscodeConfigSetup:
                 this.setupVsCodeConfigForLint()
                 break;
+
+            // utils function related command
             case Commands.colorOpacityReduce:
                 this.createUtility(colorReduceOpacity(), 'colorReduceOpacity');
                 break;

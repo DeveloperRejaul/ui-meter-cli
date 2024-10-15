@@ -1,3 +1,4 @@
+  
 import React from "react";
 import { View, ViewProps } from "react-native";
 
@@ -8,3 +9,4 @@ export interface IBox extends ViewProps {
 export function Box(props: IBox) {
     return <View {...props} />
 }
+  

@@ -27,7 +27,7 @@ npx rn-meter init
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
 
 - [Components](#components)
-  - [Layout](#layout)
+  - [Layout](#layout-components)
     - [Box](#box)
     - [Center](#center)
     - [HStack](#hstack)
@@ -36,13 +36,14 @@ npx rn-meter init
   - [Typography](#typography)
     - [Text](#text)
     - [Heading](#heading)
-  - [From](#from)
+  - [From](#from-components)
     - [Button](#button)
     - [CheckBox](#checkbox)
     - [Radio](#radio)
     - [Switch](#switch)
     - [Input](#input)
-  - [Carousal](#carousal)
+  - [Helping UI Components](#helping-ui-components)
+    - [Carousal](#carousal)
 - [Utils Function](#utils-function)
   - [Random](#random-id-generator-function)
   - [Color Opacity reducer](#color-opacity-reducer-function)
@@ -85,7 +86,33 @@ npx rn-meter setup vscode config
 ## Components
 
 Introducing our comprehensive React Native UI library with customizable themes, universal components, powerful hooks, efficient form state handling, and integrated query support. Create beautiful, functional, and responsive applications effortlessly.
+### Layout Components
+#### Box
+```
+npx rn-meter add box 
+```
+#### Center
+```
+npx rn-meter add center 
+```
 
+#### HStack
+```
+npx rn-meter add HStack 
+```
+
+#### VStack
+```
+npx rn-meter add VStack 
+```
+
+#### Divider
+```
+npx rn-meter add divider 
+```
+
+
+### From Components
 #### Button
 ```
 npx rn-meter add button 
@@ -95,7 +122,7 @@ npx rn-meter add button
 ```
 npx rn-meter add radio 
 ```
-
+### Helping UI Components
 #### Carousal
 ```
 npx rn-meter add carousal 
