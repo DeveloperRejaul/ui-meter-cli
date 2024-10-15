@@ -118,6 +118,11 @@ npx rn-meter add divider
 npx rn-meter add button 
 ```
 
+#### CheckBox
+```
+npx rn-meter add checkbox 
+```
+
 #### Radio
 ```
 npx rn-meter add radio 

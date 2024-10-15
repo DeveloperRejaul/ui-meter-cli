@@ -8,8 +8,9 @@ export enum Commands {
     HStack = "add-HStack",
     VStack = "add-VStack",
     Button = 'add-button',
-    Carousal = "add-carousal",
     Radio = "add-radio",
+    CheckBox = "add-checkbox",
+    Carousal = "add-carousal",
 
     // setup related command
     themeSetup = 'setup-theme',
