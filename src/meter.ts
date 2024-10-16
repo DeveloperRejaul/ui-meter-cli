@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent, CheckBoxContent, switchContent } from './content';
+import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent, checkBoxContent, switchContent, inputContent } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
@@ -55,7 +55,10 @@ export default class Meter {
                 this.createComponent(switchContent(), "Switch")
                 break;
             case Commands.CheckBox:
-                this.createComponent(CheckBoxContent(), "CheckBox")
+                this.createComponent(checkBoxContent(), "CheckBox")
+                break;
+            case Commands.Input:
+                this.createComponent(inputContent(), "Input")
                 break;
 
             // setup related command

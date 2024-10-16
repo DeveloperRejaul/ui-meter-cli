@@ -131,6 +131,10 @@ npx rn-meter add radio
 ```
 npx rn-meter add switch 
 ```
+#### Input
+```
+npx rn-meter add input 
+```
 ### Helping UI Components
 #### Carousal
 ```
