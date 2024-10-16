@@ -25,6 +25,12 @@ npx rn-meter init
     - [Theme Setup](#theme-setup)
     - [Eslint Setup](#eslint-setup)
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
+- [Build App Configuration](#build-app-configuration)
+  - [Generate Apk](#generate-apk)
+  - [Generate ABB](#generate-abb)
+  - [Update Apk](#update-apk)
+  - [Update ABB](#update-abb)
+  - [Change Name](#change-name)
 
 - [Components](#components)
   - [Layout](#layout-components)
@@ -82,6 +88,7 @@ Before running this command, you **MUST** remove all vs code-related configurati
 ```
 npx rn-meter setup vscode config
 ```
+
 
 ## Components
 
@@ -155,6 +162,32 @@ This function using for reducing color opacity
 npx rn-meter add fn cor
 ```
 
+## Build App Configuration
+**This command is coming soon** 
+
+#### Generate Apk
+```
+npx rn-meter generate apk
+```
+
+#### Generate ABB
+```
+npx rn-meter generate abb
+```
+
+#### Update Apk
+```
+npx rn-meter update apk
+```
+#### Update ABB
+```
+npx rn-meter update abb
+```
+### Change Name
+This Command is only for change your app name
+```
+npx rn-meter change name
+```
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
