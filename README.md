@@ -127,6 +127,10 @@ npx rn-meter add checkbox
 ```
 npx rn-meter add radio 
 ```
+#### Switch
+```
+npx rn-meter add switch 
+```
 ### Helping UI Components
 #### Carousal
 ```
@@ -138,13 +142,13 @@ npx rn-meter add carousal
 #### Random Id Generator Function
 This function using for create random string id generation 
 ```
-npx rn-meter add add fn random
+npx rn-meter add fn random
 ```
 
 #### Color Opacity Reducer Function
 This function using for reducing color opacity
 ```
-npx rn-meter add add fn cor
+npx rn-meter add fn cor
 ```
 
 ## Contributing

@@ -10,6 +10,7 @@ export enum Commands {
     Button = 'add-button',
     Radio = "add-radio",
     CheckBox = "add-checkbox",
+    Switch = "add-switch",
     Carousal = "add-carousal",
 
     // setup related command
