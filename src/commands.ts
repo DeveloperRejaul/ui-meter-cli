@@ -19,6 +19,9 @@ export enum Commands {
     eslintSetup = 'setup-eslint',
     vscodeConfigSetup = 'setup-vscode-config',
 
+    // app build setup
+    Rename = "app-rename",
+
     //Utilities function 
     random = "add-fn-random",
     colorOpacityReduce = 'add-fn-cor'

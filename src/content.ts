@@ -908,6 +908,7 @@ export default function Input(props : IInputProps) {
       borderWidth: 1,
       flexDirection: 'row',
       borderRadius: 7,
+      alignItems: 'center',
     }, containerStyle]}
     >
       {leftIcon && leftIcon}
