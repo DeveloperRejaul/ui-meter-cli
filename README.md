@@ -48,6 +48,7 @@ npx rn-meter init
     - [Radio](#radio)
     - [Switch](#switch)
     - [Input](#input)
+    - [Animated Input](#animated-input)
   - [Helping UI Components](#helping-ui-components)
     - [Carousal](#carousal)
 - [Utils Function](#utils-function)
@@ -141,6 +142,11 @@ npx rn-meter add switch
 #### Input
 ```
 npx rn-meter add input 
+```
+
+#### Animated Input
+```
+npx rn-meter add animated input 
 ```
 ### Helping UI Components
 #### Carousal

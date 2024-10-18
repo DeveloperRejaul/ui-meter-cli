@@ -12,6 +12,7 @@ export enum Commands {
     CheckBox = "add-checkbox",
     Switch = "add-switch",
     Input = "add-input",
+    AnimatedInput = "add-animated-input",
     Carousal = "add-carousal",
 
     // setup related command
