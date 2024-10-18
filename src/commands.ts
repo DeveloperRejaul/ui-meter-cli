@@ -14,6 +14,7 @@ export enum Commands {
     Input = "add-input",
     AnimatedInput = "add-animated-input",
     Carousal = "add-carousal",
+    ButtonSheet = "add-bottom-sheet",
 
     // setup related command
     themeSetup = 'setup-theme',

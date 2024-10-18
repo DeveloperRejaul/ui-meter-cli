@@ -51,6 +51,7 @@ npx rn-meter init
     - [Animated Input](#animated-input)
   - [Helping UI Components](#helping-ui-components)
     - [Carousal](#carousal)
+    - [Bottom Sheet](#bottom-sheet)
 - [Utils Function](#utils-function)
   - [Random](#random-id-generator-function)
   - [Color Opacity reducer](#color-opacity-reducer-function)
@@ -152,6 +153,10 @@ npx rn-meter add animated input
 #### Carousal
 ```
 npx rn-meter add carousal 
+```
+#### Bottom  Sheet
+```
+npx rn-meter add bottom sheet 
 ```
 
 ## Utils Function

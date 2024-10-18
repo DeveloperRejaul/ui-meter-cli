@@ -4,12 +4,17 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import { Commands } from './commands';
 import packageJson from '../package.json';
-import { buttonContent, configContent, configTheme, reactNativeConfigContent, eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent, colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent, checkBoxContent, switchContent, inputContent, animatedInput } from './content';
 import figlet from 'figlet'
 import chalk from 'chalk';
 import ora from 'ora-classic';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
+import {
+    buttonContent, configContent, configTheme, reactNativeConfigContent,
+    eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent,
+    colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent,
+    checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet
+} from './content';
 
 export default class Meter {
     private program: Command;
@@ -47,6 +52,9 @@ export default class Meter {
                 break;
             case Commands.Carousal:
                 this.createComponent(cardCarousalContent(), "Carousal")
+                break;
+            case Commands.ButtonSheet:
+                this.createComponent(bottomSheet(), "BottomSheet")
                 break;
             case Commands.Radio:
                 this.createComponent(radioContent(), "Radio")
