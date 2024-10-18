@@ -4,7 +4,7 @@
 /* eslint-disable func-names */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, View, StyleSheet, useWindowDimensions, Text, StatusBar } from 'react-native';
+import { Animated, View, StyleSheet, useWindowDimensions, StatusBar, Pressable } from 'react-native';
 
 interface IShowParams {
     render: React.JSX.Element,
@@ -67,10 +67,19 @@ export function BottomSheetContainer() {
 
   return (
     <>
-      <Animated.View ref={blurRef} style={{ backgroundColor: '#8080803f', zIndex: -999, position: 'absolute', height: TOTAL_HEIGHT, width: WIDTH, opacity }} />
-      <Animated.View style={[styles.container, { height: TOTAL_HEIGHT, width: WIDTH, bottom: -TOTAL_HEIGHT, transform: [{ translateY }], zIndex: 1000 }]}>
+      <Animated.View
+        ref={blurRef}
+        style={{ backgroundColor: '#80808057', zIndex: -999, position: 'absolute', height: TOTAL_HEIGHT, width: WIDTH, opacity }}
+      />
+      <Animated.View
+        style={[styles.container, { height: TOTAL_HEIGHT, width: WIDTH, bottom: -TOTAL_HEIGHT, transform: [{ translateY }], zIndex: 1000 }]}
+      >
+        <Pressable
+          style={{ flex: 1 }}
+          onPress={() => bottomSheet.hide()}
+        />
         <View style={[styles.sheet]}>
-          <Text onPress={() => bottomSheet.hide()} style={styles.close}>X</Text>
+          <View style={styles.bar} />
           {content}
         </View>
       </Animated.View>
@@ -87,18 +96,17 @@ const styles = StyleSheet.create({
   },
   sheet: {
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingVertical: 30,
+    padding: 10,
     borderTopStartRadius: 15,
     borderTopEndRadius: 15,
   },
-  close: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#4b4a4a',
+  bar: {
+    width: 100,
+    alignSelf: 'center',
+    height: 5,
+    borderRadius: 50,
+    backgroundColor: '#7272722c',
   },
-});  
+});
+
   
