@@ -82,6 +82,9 @@ export default class Meter {
             case Commands.vscodeConfigSetup:
                 this.setupVsCodeConfigForLint()
                 break;
+            case Commands.RTK:
+                this.rtk()
+                break;
 
             // utils function related command
             case Commands.colorOpacityReduce:
@@ -91,6 +94,7 @@ export default class Meter {
                 this.createUtility(random(), 'random');
                 break;
             default:
+                console.log(chalk.red("Hey!, Invalid command executed. Please read documentation :https://www.npmjs.com/package/rn-meter"));
                 break;
         }
 
@@ -192,6 +196,28 @@ export default class Meter {
         ]);
         if (ans.vscode) await this.setupVsCodeConfigForLint()
     }
+
+
+    /**
+     *  @description this function using for setup redux toolkit
+     */
+    async rtk () {
+      if(!await this.checkConfigExists()) return;
+      const config = await this.getConfig();
+      const componentsPath =config.path.components as string;
+      const newPath = componentsPath.split(path.sep);
+      newPath.pop()
+      const rtkPath = newPath.join(path.sep).concat(path.sep, "rtk")
+
+        const ans = await inquirer.prompt([
+            {
+                type:"input",
+                message:"Please gave a valid path for writing rtk code",
+                default: rtkPath
+            }
+        ]) 
+    }
+
 
 
     /**

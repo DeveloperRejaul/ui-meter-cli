@@ -20,6 +20,7 @@ export enum Commands {
     themeSetup = 'setup-theme',
     eslintSetup = 'setup-eslint',
     vscodeConfigSetup = 'setup-vscode-config',
+    RTK="setup-rtk",
 
     // app build setup
     Rename = "app-rename",
