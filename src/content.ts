@@ -1074,14 +1074,12 @@ export function BottomSheetContainer() {
   const TOTAL_HEIGHT = (HEIGHT + (StatusBar?.currentHeight || 0));
   const translateY = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const blurRef = useRef<View | null>(null);
   const [content, setContent] = useState<React.JSX.Element>();
 
   useEffect(() => {
     bottomSheet.show = function (ele) {
       setContent(ele.render);
-      blurRef.current?.setNativeProps({ zIndex: 999 });
-      Animated.parallel([
+      Animated.sequence([
         Animated.timing(translateY, {
           toValue: -TOTAL_HEIGHT,
           useNativeDriver: true,
@@ -1096,42 +1094,36 @@ export function BottomSheetContainer() {
     };
 
     bottomSheet.hide = function (data) {
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: 0,
-          useNativeDriver: true,
-          duration: data?.duration || 100,
-        }),
+      Animated.sequence([
         Animated.timing(opacity, {
           toValue: 0,
           useNativeDriver: true,
           duration: data?.duration || 100,
         }),
-      ]).start(() => {
-        blurRef.current?.setNativeProps({ zIndex: -999 });
-      });
+        Animated.timing(translateY, {
+          toValue: 0,
+          useNativeDriver: true,
+          duration: data?.duration || 100,
+        }),
+      ]).start();
     };
   }, []);
 
   return (
-    <>
-      <Animated.View
-        ref={blurRef}
-        style={{ backgroundColor: '#80808057', zIndex: -999, position: 'absolute', height: TOTAL_HEIGHT, width: WIDTH, opacity }}
-      />
-      <Animated.View
-        style={[styles.container, { height: TOTAL_HEIGHT, width: WIDTH, bottom: -TOTAL_HEIGHT, transform: [{ translateY }], zIndex: 1000 }]}
-      >
+    <Animated.View
+      style={[styles.container, { height: TOTAL_HEIGHT, width: WIDTH, bottom: -TOTAL_HEIGHT, transform: [{ translateY }], zIndex: 1000 }]}
+    >
+      <Animated.View style={{ flex: 1, backgroundColor: '#00000062', opacity }}>
         <Pressable
           style={{ flex: 1 }}
           onPress={() => bottomSheet.hide()}
         />
-        <View style={[styles.sheet]}>
-          <View style={styles.bar} />
-          {content}
-        </View>
       </Animated.View>
-    </>
+      <View style={[styles.sheet]}>
+        <View style={styles.bar} />
+        {content}
+      </View>
+    </Animated.View>
 
   );
 }
