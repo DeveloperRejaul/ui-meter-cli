@@ -45,6 +45,7 @@ npx rn-meter init
     - [Animated Input](#animated-input)
   - [Helping UI Components](#helping-ui-components)
     - [Carousal](#carousal)
+    - [KeyboardAvoidingScrollView](#keyboardavoidingscrollview)
     - [Bottom Sheet](#bottom-sheet)
 - [Utils Function](#utils-function)
   - [Random](#random-id-generator-function)
@@ -150,11 +151,21 @@ npx rn-meter add input
 ```
 npx rn-meter add animated input 
 ```
+
+### Animated Components
+
+
 ### Helping UI Components
 #### Carousal
 ```
 npx rn-meter add carousal 
 ```
+
+#### KeyboardAvoidingScrollView
+```
+npx rn-meter add keyboardAvoidingScrollView 
+```
+
 #### Bottom  Sheet
 ```
 npx rn-meter add bottom sheet 

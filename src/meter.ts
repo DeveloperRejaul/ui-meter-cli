@@ -13,7 +13,8 @@ import {
     buttonContent, configContent, configTheme, reactNativeConfigContent,
     eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent,
     colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent,
-    checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet
+    checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet,
+    keyboardAvoidingScrollView
 } from './content';
 
 export default class Meter {
@@ -70,6 +71,9 @@ export default class Meter {
                 break;
             case Commands.AnimatedInput:
                 this.createComponent(animatedInput(), "AnimatedInput")
+                break;
+            case Commands.KeyboardAvoidingScrollView:
+                this.createComponent(keyboardAvoidingScrollView(), "KeyboardAvoidingScrollView")
                 break;
 
             // setup related command
