@@ -28,5 +28,8 @@ export enum Commands {
 
     //Utilities function 
     random = "add-fn-random",
-    colorOpacityReduce = 'add-fn-cor'
+    colorOpacityReduce = 'add-fn-cor',
+
+    // audio
+    AudioRecord = "add-audio-record"
 }

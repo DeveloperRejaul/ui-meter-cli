@@ -14,7 +14,9 @@ import {
     eslintConfigContent, vscodeJsonContent, cardCarousalContent, radioContent,
     colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent,
     checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet,
-    keyboardAvoidingScrollView
+    keyboardAvoidingScrollView,
+    audioRecordHook,
+    audionRecordProvider
 } from './content';
 
 export default class Meter {
@@ -90,6 +92,14 @@ export default class Meter {
                 this.rtk()
                 break;
 
+            // audion
+            case Commands.AudioRecord:
+                (async()=>{
+                   const pt = await this.createFolder('audio')
+                   await this.writeFile(audioRecordHook(), 'useAudioRecorder.ts', pt)
+                   await this.writeFile(audionRecordProvider(), 'AudionRecordProvider.tsx', pt)
+                })()
+                break;
             // utils function related command
             case Commands.colorOpacityReduce:
                 this.createUtility(colorReduceOpacity(), 'colorReduceOpacity');
@@ -316,6 +326,7 @@ export default class Meter {
             pt = path.join(pt, element)
             if (!existsSync(pt)) await fs.mkdir(pt)
         }
+        return pt
     }
 
 
@@ -398,6 +409,18 @@ export default class Meter {
             return false
         }
         return true
+    }
+
+
+        /**
+   *  @description this function using for write any kinds of file 
+   */
+    async writeFile (content:string,filename:string, pt:string) {
+        try {
+            await fs.writeFile(path.join(pt, filename), content);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     /**

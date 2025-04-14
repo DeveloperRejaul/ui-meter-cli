@@ -56,6 +56,8 @@ npx rn-meter init
   - [Update Apk](#update-apk)
   - [Update ABB](#update-abb)
   - [Change Name](#change-name)
+- [Native Api Mobile](#native-api-mobile)
+  - [Audio](#audio)
 
 - [Contributing](#contributing)
 - [Support](#support)
@@ -211,6 +213,111 @@ This Command is only for change your app name
 ```
 npx rn-meter change name
 ```
+
+## Native Api Mobile
+
+#### Audio
+
+This hook provides a complete utility for recording, playing, listing, and managing audio files in your React Native app.
+
+## 🔧 Libraries Used
+
+- 🎙️ [react-native-audio-record](https://github.com/goodatlas/react-native-audio-record) – Record audio with native support.
+- 🔓 [react-native-permissions](https://github.com/zoontek/react-native-permissions) – Handle runtime permissions easily.
+- 🔊 [react-native-sound-player](https://github.com/johnsonsu/react-native-sound-player) – Play audio from local or remote sources.
+
+Install the required dependencies and setup flowing library instructions
+
+```bash
+npm install react-native-audio-record react-native-permissions react-native-sound-player
+```
+
+```
+npx rn-meter add audio record
+```
+
+#### Using Example (`App.tsx`)
+```tsx
+  // Provide audio provider 
+  import React from 'react';
+  import AudioProvider from './src/AudioProvider';
+  import Audio from './src/Audio';
+
+  export default function App() {
+    return (
+      <AudioProvider>
+        <Audio/>
+      </AudioProvider>
+    );
+  }
+```
+
+#### Audio.tsx
+```jsx
+// use like this 
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import useAudio from './useAudio';
+
+export default function Audio() {
+   const {startRecording,stopRecording, playRecording, stopPlayer, getAllRecording, getLastRecording, deleteAllRecording, deleteRecordingById} = useAudio();
+
+  return (
+    <View style={styles.container}>
+        <TouchableOpacity
+        // disabled={isRecording}
+        // style={{opacity: isRecording ? 0.7 : 1}}
+        onPress={startRecording}
+        >
+        <Text style={styles.btn}>Start</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+        // disabled={!isRecording}
+        // style={{opacity: !isRecording ? 0.7 : 1}}
+        onPress={stopRecording}>
+        <Text style={styles.btn}>Stop</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={()=>playRecording()}>
+            <Text style={styles.btn}>Play</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={stopPlayer}>
+            <Text style={styles.btn}>Stop Player</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={getAllRecording}>
+            <Text style={styles.btn}>get all recording</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={getLastRecording}>
+            <Text style={styles.btn}>get last recording</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={deleteAllRecording}>
+            <Text style={styles.btn}>delete all recording</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={()=>deleteRecordingById('recorder-salespype-1744540057355.wav')}>
+            <Text style={styles.btn}>delete recording by id</Text>
+        </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,justifyContent:'center',alignItems:'center', gap: 10,
+  },
+  btn:{
+    backgroundColor:'blue', paddingHorizontal: 10, paddingVertical: 5, color:'#fff',fontWeight:'bold',
+  },
+});
+ 
+```
+
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
