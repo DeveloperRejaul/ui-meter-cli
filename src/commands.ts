@@ -22,6 +22,8 @@ export enum Commands {
     eslintSetup = 'setup-eslint',
     vscodeConfigSetup = 'setup-vscode-config',
     RTK="setup-rtk",
+    aliasSetup = 'setup-alias',
+
 
     // app build setup
     Rename = "app-rename",

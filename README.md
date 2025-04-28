@@ -25,6 +25,7 @@ npx rn-meter init
     - [Theme Setup](#theme-setup)
     - [Eslint Setup](#eslint-setup)
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
+    - [Setup Alias](#setup-alias)
 
 - [Components](#components)
   - [Layout](#layout-components)
@@ -93,6 +94,12 @@ Before running this command, you **MUST** remove all vs code-related configurati
 
 ```
 npx rn-meter setup vscode config
+```
+
+
+### Setup Alias
+```
+npx rn-meter setup alias
 ```
 
 

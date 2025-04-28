@@ -1,6 +1,6 @@
 {
   "name": "rn-meter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -51,7 +51,7 @@
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "inquirer": "^11.1.0",
-    "ora-classic": "^5.4.2"
-  },
-  "packageManager": "yarn@3.6.4"
+    "ora-classic": "^5.4.2",
+    "recast": "^0.23.11"
+  }
 }
