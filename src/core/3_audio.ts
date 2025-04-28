@@ -7,5 +7,4 @@ export class Audio extends Utils {
     await this.writeFile(audioRecordHook(), 'useAudioRecorder.ts', pt)
     await this.writeFile(audionRecordProvider(), 'AudionRecordProvider.tsx', pt)
    }
-
 }

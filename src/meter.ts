@@ -8,7 +8,7 @@ import {
     checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet,
     keyboardAvoidingScrollView,
 } from './content';
-import { Core } from 'core/core';
+import { Core } from 'core/1_core';
 
 export default class Meter extends  Core {
     private program: Command;

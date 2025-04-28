@@ -9,10 +9,10 @@ import {
     eslintConfigContent, vscodeJsonContent,
     babelConfigContent
 } from '../content';
-import { Audio } from './audio';
+import { Audio } from './3_audio';
 
 
-export class Setup  extends Audio{
+export class Setup  extends Audio {
 
       /**
      * @description this method used for initial project configuration
