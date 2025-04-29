@@ -1,6 +1,6 @@
 {
   "name": "rn-meter",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -33,7 +33,41 @@
   },
   "keywords": [
     "ui-meter-cli",
-    "Compiler"
+    "Compiler",
+    "React Native",
+    "React",
+    "Expo",
+    "React Native CLI",
+    "React Native Development",
+    "React Native Tools",
+    "React Native Performance",
+    "React Native Optimization",
+    "React Native Code Quality",
+    "React Native Code Analysis",
+    "React Native Code Metrics",
+    "JavaScript",
+    "TypeScript",
+    "CLI",
+    "Code Quality",
+    "Code Analysis",
+    "Code Metrics",
+    "Code Review",
+    "Code Style",
+    "Code Formatting",
+    "Code Linting",
+    "Code Refactoring",
+    "Code Optimization",
+    "Code Performance",
+    "Code Maintainability",
+    "Code Readability",
+    "Code Complexity",
+    "Code Duplication",
+    "Code Smell",
+    "Code Security",
+    "Code Vulnerability",
+    "Code Standards",
+    "Code Best Practices",
+    "Code Conventions"
   ],
   "homepage": "https://github.com/DeveloperRejaul/ui-meter-cli#readme",
   "files": [
@@ -48,10 +82,9 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "inquirer": "^11.1.0",
-    "ora-classic": "^5.4.2",
+    "ora": "^8.2.0",
     "recast": "^0.23.11"
   }
 }

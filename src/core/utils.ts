@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 import { exec, ExecException } from 'node:child_process'
 import figlet from 'figlet'
 import chalk from 'chalk';
-import ora from 'ora-classic';
+import ora from 'ora';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
 import { configContent } from 'content';

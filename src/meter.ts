@@ -11,13 +11,10 @@ import {
 import { Core } from 'core/1_core';
 
 export default class Meter extends  Core {
-    private program: Command;
+    // private program: Command;
 
     constructor() {
         super();
-        this.program = new Command();
-        this.program.version(packageJson.version).description("This is the react native ui-meter library cli tool");
-
         // get arguments from command line
         const command = process.argv.slice(2).join('-');
 
@@ -102,9 +99,5 @@ export default class Meter extends  Core {
                 console.log(chalk.red("Hey!, Invalid command executed. Please read documentation :https://www.npmjs.com/package/rn-meter"));
                 break;
         }
-
-
-        // handle program arguments
-        this.program.parse(process.argv);
     }
 }
