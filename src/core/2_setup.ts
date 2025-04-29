@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import ora from 'ora-classic';
+import ora from 'ora';
 import path from 'node:path';
 import * as recast from "recast";
 import {
