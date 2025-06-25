@@ -38,7 +38,7 @@ export class Utils {
         const files = await fs.readdir(process.cwd())
 
         // detect project ts or js 
-        return files.includes('meter.config.json') && files.includes(`meter.config.${isTS ? 'ts' : 'js'}`)
+        return files.includes('meter.config.json')
     }
 
 
