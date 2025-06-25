@@ -5,6 +5,8 @@ export enum Commands {
     Box = "add-box",
     Center = 'add-center',
     Divider = "add-divider",
+    alert = "add-alert",
+    toast = "add-toast",
     HStack = "add-HStack",
     VStack = "add-VStack",
     Button = 'add-button',

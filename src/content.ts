@@ -633,6 +633,8 @@ export function Center(props: ICenter) {
   `
 }
 
+
+
 export function divider() {
   return `
 import { View, ViewProps } from "react-native";
@@ -669,6 +671,289 @@ export default function Divider(props: IDivider) {
         />
     );
 }
+  
+  `
+}
+
+
+export function alert () {
+  return `
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useLayoutEffect } from 'react';
+import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import Animated, { interpolate, runOnJS, runOnUI, setNativeProps, useAnimatedRef, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Button from './Button';
+import { colors } from '../constance/colors';
+import { rcp } from '../utils/color';
+
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+interface IShowData {
+  message: string;
+}
+
+interface IAnimatedAlert {
+  show: (data: IShowData, cb?: (value: 'cancel' | 'ok') => void) => void
+}
+
+export const animatedAlert: IAnimatedAlert = {
+  // @ts-ignore
+  show: (data: IShowData, cb: (value: string) => void) => { },
+};
+// @ts-ignore
+let callBack: (value: string) => void | null = null;
+
+export default function AnimatedAlert() {
+  const { height, width } = useWindowDimensions();
+  const textRef = useAnimatedRef();
+  const animatedValue = useSharedValue(0);
+
+  useLayoutEffect(() => {
+    // @ts-ignore
+    animatedAlert.show = show;
+  }, []);
+
+  const hide = (value: string) => {
+    if (callBack) runOnJS(callBack)(value);
+    animatedValue.value = withTiming(0, { duration: 500 });
+  };
+
+  const show = (data: IShowData, cb: (value: string) => void) => {
+    callBack = cb;
+    runOnUI(() => {
+      if (Platform.OS === 'web') {
+        // @ts-ignore
+        textRef.current.value = data.message;
+        return;
+      }
+      setNativeProps(textRef, { text: data.message });
+    })();
+    animatedValue.value = withTiming(1, { duration: 300 });
+  };
+  const animatedContainerStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(animatedValue.value, [1, 0.5], [1, 0], 'clamp'),
+    transform: [{ translateX: interpolate(animatedValue.value, [0.5, 0], [0, width], 'clamp') }],
+    display: animatedValue.value === 0 ? 'none' : 'flex',
+  }));
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale: interpolate(animatedValue.value, [1, 0.5], [1, 0.9], 'clamp'),
+      },
+      {
+        translateY: interpolate(animatedValue.value, [1, 0.5], [0, 50], 'clamp'),
+      },
+    ],
+    opacity: interpolate(animatedValue.value, [1, 0], [1, 0], 'clamp'),
+    display: animatedValue.value === 0 ? 'none' : 'flex',
+  }));
+
+  return (
+    <Animated.View style={[styles.body, { height, width }, animatedContainerStyle]}>
+      <Animated.View style={[styles.container, { width:  (width * 0.8), height: 270 }, animatedStyle]}>
+        <View style={styles.alertHeader}>
+          <Text style={styles.title}>Alert Action </Text>
+          <TouchableOpacity
+            onPress={() => hide('close')}
+            style={styles.close}
+          >
+            <Icon name="close" color={colors.dark} size={20} />
+          </TouchableOpacity>
+        </View>
+        <AnimatedTextInput
+          ref={textRef}
+          style={styles.message}
+          editable={false}
+          multiline
+        />
+        <View style={styles.btnContainer}>
+          <Button
+            text="Cancel"
+            containerStyle={{ backgroundColor: colors.button }}
+            textStyle={{ color: colors.weight }}
+            onPress={() => hide('cancel')}
+          />
+          <Button
+            text="Ok"
+            containerStyle={{ backgroundColor: colors.error }}
+            textStyle={{ color: colors.weight}}
+            onPress={() => hide('ok')}
+          />
+        </View>
+      </Animated.View>
+    </Animated.View>
+  );
+}
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  container: {
+    backgroundColor: colors.weight,
+    padding: 20,
+    borderRadius: 10,
+    elevation: 4,
+    rowGap: 10,
+    justifyContent: 'space-between',
+  },
+
+  body: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: rcp(colors.dark, 30),
+  },
+  message: {
+    color: colors.dark,
+    fontSize: 16,
+    flex: 1,
+    width: '100%',
+    textAlignVertical: 'top',
+  },
+  close: {
+    backgroundColor: rcp(colors.button, 60),
+    borderRadius: 20,
+    padding: 5,
+    top: -10,
+    right: -10,
+  },
+  btnContainer: { flexDirection: 'row', alignSelf: 'flex-end', columnGap: 20 },
+  alertHeader:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
+  
+  `
+}
+
+
+export function toast () {
+  return `
+  import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, useWindowDimensions } from 'react-native';
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withDelay, withSpring } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { colors } from '../constance/colors';
+import { rcp } from '../utils/color';
+
+interface IShowData {
+  title?: string,
+  message: string
+  hideDuration?: number,
+  bgColor?: string
+  titleColor?: string
+  messageColor?: string
+  type?: 'success' | 'error' | 'info' | 'warning'
+}
+
+interface IAnimatedToast {
+  show: (data: IShowData, cb?: () => void) => void
+}
+
+export const animatedToast: IAnimatedToast = {
+  show: () => { },
+};
+
+export default function AnimatedToast() {
+  const { width: WIDTH } = useWindowDimensions();
+  const TOAST_WIDTH = 350;
+  const OFFSET = WIDTH - TOAST_WIDTH;
+  const ANIMATED_VISIBLE_VALUE = 50;
+  const ANIMATED_HIDE_VALUE = -100;
+  const top = useSharedValue(ANIMATED_HIDE_VALUE);
+  const [tostData, setTostData] = useState<IShowData>({} as IShowData);
+
+  useEffect(() => {
+    animatedToast.show = function show(data: IShowData, cb?: () => void) {
+      setTostData(data);
+      top.value = withSpring(ANIMATED_VISIBLE_VALUE, {}, () => {
+        top.value = withDelay(data.hideDuration || 1000, withSpring(ANIMATED_HIDE_VALUE, {}, () => {
+          if (cb) runOnJS(cb)?.();
+        }));
+      });
+    };
+  }, []);
+
+  const hide = () => {
+    top.value = withSpring(ANIMATED_HIDE_VALUE);
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    display: top.get() === ANIMATED_HIDE_VALUE ? 'none' : 'flex',
+  }));
+
+  const getBg = (type:IShowData['type']) => {
+    switch (type) {
+    case 'success':
+      return colors.success;
+    case 'error':
+      return colors.error;
+    case 'info':
+      return colors.error;
+    case 'warning':
+      return colors.error;
+    default:
+      return colors.success;
+    }
+  };
+
+  return (
+    <Animated.View
+      style={[
+        {
+          ...styles.container,
+          top,
+          width: TOAST_WIDTH,
+          left: OFFSET / 2,
+          right: OFFSET / 2,
+          backgroundColor: getBg(tostData.type),
+        }, animatedStyle]}
+    >
+      <TouchableOpacity
+        onPress={hide}
+        style={styles.close}
+      >
+        <Icon name="close" color={colors.dark} size={20} />
+      </TouchableOpacity>
+      <Text style={{ ...styles.title, color: tostData?.titleColor || colors.dark }}> {tostData?.title || 'Action Message'}</Text>
+      <Text style={{ ...styles.message, color: tostData?.messageColor || colors.dark }}> {tostData.message || ''}</Text>
+    </Animated.View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    height: 80,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 0,
+  },
+  message: {
+    fontSize: 14,
+    padding: 0,
+  },
+  close: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    backgroundColor: rcp(colors.active, 10),
+    borderRadius: 20,
+    padding: 5,
+  },
+});
+  
   
   `
 }

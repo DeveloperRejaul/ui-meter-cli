@@ -7,6 +7,8 @@ import {
     colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent,
     checkBoxContent, switchContent, inputContent, animatedInput, bottomSheet,
     keyboardAvoidingScrollView,
+    alert,
+    toast,
 } from './content';
 import { Core } from 'core/1_core';
 
@@ -32,6 +34,12 @@ export default class Meter extends  Core {
                 break;
             case Commands.Divider:
                 this.createComponent(divider(), "Divider")
+                break;
+            case Commands.alert:
+                this.createComponent(alert(), "AnimatedAlert")
+                break;
+            case Commands.toast:
+                this.createComponent(toast(), "Toast")
                 break;
             case Commands.HStack:
                 this.createComponent(HStackContent(), "HStack")

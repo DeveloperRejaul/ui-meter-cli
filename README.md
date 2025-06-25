@@ -34,6 +34,8 @@ npx rn-meter init
     - [HStack](#hstack)
     - [VStack](#vstack)
     - [Divider](#divider)
+    - [Alert](#alert)
+    - [Toast](#toast)
   - [Typography](#typography)
     - [Text](#text)
     - [Heading](#heading)
@@ -129,6 +131,15 @@ npx rn-meter add VStack
 #### Divider
 ```
 npx rn-meter add divider 
+```
+
+#### Alert
+```
+npx rn-meter add alert 
+```
+#### Toast
+```
+npx rn-meter add toast 
 ```
 
 
