@@ -27,6 +27,9 @@ npx rn-meter init
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
     - [Setup Alias](#setup-alias)
 
+- [Animations](#animations)
+  - [Chart](#chart)
+    - [Pai Chart](#pai-chart)
 - [Components](#components)
   - [Layout](#layout-components)
     - [Box](#box)
@@ -103,7 +106,17 @@ npx rn-meter setup vscode config
 ```
 npx rn-meter setup alias
 ```
-
+## Animations
+### Chart
+#### Pie Chart
+* ⚙️ **Setup Note:**  
+ * Make sure you have installed and configured:
+ * - `@shopify/react-native-skia`
+ * - `react-native-reanimated`
+ * 
+```
+npx rn-meter add piechart1
+```
 
 ## Components
 

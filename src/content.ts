@@ -1746,3 +1746,347 @@ export function babelConfigContent () {
 };
 `
 }
+
+
+
+// pie chart 
+export function getPieChartTypes () {
+  return `
+import { SharedValue } from "react-native-reanimated";
+
+export interface PieChartProps {
+  data: PieChartDataEntry[];
+  textTitle?:string
+  textValue?:string
+  GAP?:number
+  SIZE?:number
+  BASE_STROKE_WIDTH?:number
+}
+
+export interface PieChartDataEntry {
+  value: number;
+  color: string;
+  label: string;
+}
+
+export interface PieSliceData {
+  item: PieChartDataEntry;
+  startAngle: number;
+  index: number;
+  radius: number;
+  center: number;
+  fullSweepAngle: number;
+  gap: number;
+  animatedValue: SharedValue<number>;
+  strokeWidth: number;
+  selectedSlice: SharedValue<number | null>;
+}
+
+export interface PieSliceContextTypes {
+  slice: PieSliceData;
+}
+
+export interface CalculateAngleParams  {
+  proportion: number;
+  currentAngle: number;
+  gap: number;
+}
+
+export interface ICreateArcPathParams {
+  startAngle: number;
+  endAngle: number;
+  radius: number;
+  center: number;
+  strokeWidth: number;
+}
+
+export interface ICheckIfDistanceIsInsideArcParams {
+  centerX: number;
+  centerY: number;
+  radius: number;
+  strokeWidth: number;
+  x: number;
+  y: number;
+}
+
+
+export interface IIsPointInArcParams {
+  x: number;
+  y: number;
+  centerX: number;
+  centerY: number;
+  radius: number;
+  startAngle: number;
+  endAngle: number;
+}
+
+export interface ICalculateTouchAngle {
+  x: number;
+  y: number;
+  centerX: number;
+  centerY: number;
+}
+
+
+export interface IHandlePieTouchParams <T>{
+  centerX: number;
+  centerY: number;
+  data: T[];
+  totalValue: number;
+  radius: number;
+  gap: number;
+  x: number;
+  y: number;
+
+  onSlicePress: (index: number) => void;
+  selectedSlice: SharedValue<number | null>;
+} 
+  `
+}
+
+export function getPieSlice () {
+  return `
+  import { PieSliceData } from "./types";
+import { SPRING_CONFIG } from "./animation";
+import { createArcPath } from "./draw";
+import { Path } from "@shopify/react-native-skia";
+import {
+  useDerivedValue,
+  withSpring,
+} from "react-native-reanimated";
+
+export function PieSlice(props: PieSliceData) {
+  const {
+    index,
+    item,
+    startAngle,
+    fullSweepAngle,
+    gap,
+    animatedValue,
+    radius,
+    center,
+    strokeWidth,
+    selectedSlice,
+  } = props;
+  
+  const animatedStrokeWidth = useDerivedValue(() => {
+    if (selectedSlice.value === null) {
+      return withSpring(strokeWidth, SPRING_CONFIG);
+    }
+    return withSpring(selectedSlice.value === index ? strokeWidth * 1.5 : strokeWidth * 0.8,SPRING_CONFIG);
+  });
+
+  const path = useDerivedValue(() => {
+    const animatedSweep = Math.max(0,(fullSweepAngle - gap) * animatedValue.value);
+
+    return createArcPath({
+      startAngle: startAngle,
+      endAngle: startAngle + animatedSweep,
+      radius,
+      center: center,
+      strokeWidth: strokeWidth,
+    });
+  });
+
+  return (
+    <Path
+      path={path}
+      color={item.color}
+      style="stroke"
+      strokeWidth={animatedStrokeWidth}
+      strokeCap="round"
+    />
+  );
+}
+  `
+}
+
+
+
+/**
+ * Generates the full code of PieChartIndex component as a string.
+ * 
+ * @returns {string} The code of the PieChartIndex component.
+ */
+export function getPieChartIndexCode() {
+  return `
+  /* eslint-disable react-hooks/exhaustive-deps */
+  import { useEffect, useMemo } from "react";
+  import { Canvas, Group, Text, useFont } from "@shopify/react-native-skia";
+  import { useSharedValue, withTiming } from "react-native-reanimated";
+  import { PieSlice } from "./pie-slice";
+  import { PieChartProps } from "./types";
+
+  /**
+   * PieChartIndex Component
+   * 
+   * Renders a pie chart using Skia and React Native Reanimated.
+   * 
+   * ⚙️ Setup Required:
+   * - Install and configure \`@shopify/react-native-skia\`
+   * - Install and configure \`react-native-reanimated\`
+   * 
+   * @component
+   * 
+   * @example
+   * <PieChartIndex
+   *   data={[
+   *     { value: 100, color: "#d61212", label: "label-01" },
+   *     { value: 200, color: "#d69112", label: "label-02" },
+   *     { value: 200, color: "#1246d6", label: "label-03" }
+   *   ]}
+   *   textTitle="Hello World"
+   *   textValue="$11431"
+   *   SIZE={200}
+   *   BASE_STROKE_WIDTH={25}
+   * />
+   */
+  export default function PieChartIndex(props: PieChartProps) {
+    const {
+      data,
+      textTitle = "Hello World",
+      textValue = "257625",
+      GAP = 0,
+      SIZE = 300,
+      BASE_STROKE_WIDTH = 40
+    } = props;
+
+    const ADJUSTED_SIZE = SIZE + BASE_STROKE_WIDTH * 2;
+    const CENTER = ADJUSTED_SIZE / 2;
+    const RADIUS = SIZE / 2;
+
+    const pieAnimation = useSharedValue(0);
+    const selectedSlice = useSharedValue<number | null>(null);
+    const fontSize = 17;
+    const font1 = useFont(require("./Roboto_Condensed-Regular.ttf"), fontSize);
+    const font2 = useFont(require("./Roboto-Bold.ttf"), fontSize);
+
+    useEffect(() => {
+      pieAnimation.value = 0;
+      pieAnimation.value = withTiming(1, { duration: 800 });
+    }, [data]);
+
+    const totalValue = useMemo(() => (
+      data.reduce((sum, item) => sum + item.value, 0)
+    ), [data]);
+
+    const pieChartSlices = useMemo(() => {
+      let currentAngle = -90;
+      return data.map((item, index) => {
+        const proportion = item.value / totalValue;
+        const fullSweepAngle = proportion * 360;
+        const segmentStart = currentAngle;
+        currentAngle += fullSweepAngle;
+
+        return {
+          startAngle: segmentStart,
+          fullSweepAngle,
+          item,
+          index,
+          radius: RADIUS,
+          center: CENTER,
+          gap: GAP,
+          strokeWidth: BASE_STROKE_WIDTH,
+        };
+      });
+    }, [data]);
+
+    return (
+      <Canvas style={{ width: ADJUSTED_SIZE, height: ADJUSTED_SIZE }}>
+        <Group>
+          <Text
+            x={CENTER}
+            y={CENTER - 10}
+            text={textTitle}
+            font={font1}
+            textAlign="center"
+            textBaseline="middle"
+          />
+          <Text
+            x={CENTER}
+            y={CENTER + 10}
+            text={textValue}
+            font={font2}
+            textAlign="center"
+            textBaseline="middle"
+          />
+          {pieChartSlices.map((slice, index) => (
+            <PieSlice
+              key={index}
+              {...slice}
+              index={index}
+              animatedValue={pieAnimation}
+              selectedSlice={selectedSlice}
+            />
+          ))}
+        </Group>
+      </Canvas>
+    );
+  }
+  `;
+}
+
+
+export function getPieChartAnimations () {
+  return `
+import { SpringConfig } from "react-native-reanimated/lib/typescript/animation/springUtils";
+
+export const SPRING_CONFIG: SpringConfig = {
+  mass: 1,
+  damping: 15,
+  stiffness: 130,
+};
+  
+  `
+}
+
+
+export function getPieChartCalculate () {
+  return `
+import { CalculateAngleParams } from "./types";
+
+export const calculateAngle = (args: CalculateAngleParams) => {
+  'worklet';
+  const { proportion, currentAngle: _currentAngle, gap } = args;
+
+  const sweepAngle = proportion * 360;
+
+  const startAngle = (_currentAngle + 360) % 360; // Normalize to 0-360
+  const endAngle = (startAngle + sweepAngle - gap + 360) % 360; // Normalize to 0-360
+  const currentAngle = _currentAngle + sweepAngle;
+
+  return {
+    startAngle,
+    endAngle,
+    currentAngle,
+  };
+};
+  
+  `
+}
+
+
+export function getPieChartDraw () {
+  return `
+import { Skia } from '@shopify/react-native-skia';
+import { ICreateArcPathParams } from './types';
+
+export const createArcPath = (args: ICreateArcPathParams) => {
+  'worklet';
+  const { startAngle, endAngle, radius, center, strokeWidth } = args;
+  const path = Skia.Path.Make();
+
+  path.addArc(
+    {
+      x: center - radius + strokeWidth / 2,
+      y: center - radius + strokeWidth / 2,
+      width: radius * 2 - strokeWidth,
+      height: radius * 2 - strokeWidth,
+    },
+    startAngle,
+    endAngle - startAngle,
+  );
+  return path;
+};
+  `
+}

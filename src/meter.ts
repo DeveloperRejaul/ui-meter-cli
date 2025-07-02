@@ -1,7 +1,6 @@
-import { Command } from 'commander'
 import { Commands } from './commands';
-import packageJson from '../package.json';
 import chalk from 'chalk';
+
 import {
     buttonContent,cardCarousalContent, radioContent,
     colorReduceOpacity, random, box, center, divider, HStackContent, VStackContent,
@@ -25,6 +24,12 @@ export default class Meter extends  Core {
             case Commands.Init:
                 this.init()
                 break;
+
+            // Animations
+            // chart
+            case Commands.Piechart1: 
+                this.createPieChart1()
+                break
             // components related command
             case Commands.Box:
                 this.createComponent(box(), "Box")

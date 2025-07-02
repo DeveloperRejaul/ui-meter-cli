@@ -104,7 +104,8 @@
     "skipLibCheck": false /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src"
+    "src",
+    "app.d.ts"
   ],
   "exclude": [
     "node_modules",

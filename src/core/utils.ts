@@ -182,7 +182,7 @@ export class Utils {
         /**
    *  @description this function using for write any kinds of file 
    */
-    async writeFile (content:string,filename:string, pt:string) {
+    async writeFile (content:any,filename:string, pt:string) {
         try {
             await fs.writeFile(path.join(pt, filename), content);
         } catch (error) {
@@ -198,6 +198,13 @@ export class Utils {
         if (isConfigExists) {
             const config = await this.getConfig();
             const isTs = await this.checkIsTsProject()
+
+            if(componentName.includes("/")) {
+                const arr = componentName.split("/")
+                arr.pop()
+                const newPath  = path.join(...arr)
+                this.createFolder(path.join(config.path.components, newPath))
+            }
             const componentPath = path.join(process.cwd(), config.path.components, `${componentName}.${isTs ? 'tsx' : 'jsx'}`)
             if (existsSync(componentPath)) return console.log(`${componentName} already exists if you overwrite`);
             await fs.writeFile(componentPath, content);

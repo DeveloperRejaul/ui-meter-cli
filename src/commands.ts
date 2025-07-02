@@ -19,6 +19,10 @@ export enum Commands {
     ButtonSheet = "add-bottom-sheet",
     KeyboardAvoidingScrollView = "add-keyboardAvoidingScrollView",
 
+    // Animations
+    // chart 
+    Piechart1 = 'add-piechart1',
+
     // setup related command
     themeSetup = 'setup-theme',
     eslintSetup = 'setup-eslint',
