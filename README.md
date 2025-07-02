@@ -29,7 +29,7 @@ npx rn-meter init
 
 - [Animations](#animations)
   - [Chart](#chart)
-    - [Pai Chart](#pai-chart)
+    - [Pie Chart](#pie-chart)
 - [Components](#components)
   - [Layout](#layout-components)
     - [Box](#box)
