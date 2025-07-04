@@ -27,7 +27,6 @@ export enum Commands {
     themeSetup = 'setup-theme',
     eslintSetup = 'setup-eslint',
     vscodeConfigSetup = 'setup-vscode-config',
-    RTK="setup-rtk",
     aliasSetup = 'setup-alias',
 
 

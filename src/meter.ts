@@ -90,9 +90,6 @@ export default class Meter extends  Core {
             case Commands.vscodeConfigSetup:
                 this.setupVsCodeConfigForLint()
                 break;
-            case Commands.RTK:
-                this.rtk()
-                break;
             case Commands.aliasSetup:
                 this.aliasSetup()
                 break;

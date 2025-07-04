@@ -37,8 +37,6 @@ npx rn-meter init
     - [HStack](#hstack)
     - [VStack](#vstack)
     - [Divider](#divider)
-    - [Alert](#alert)
-    - [Toast](#toast)
   - [Typography](#typography)
     - [Text](#text)
     - [Heading](#heading)
@@ -53,15 +51,11 @@ npx rn-meter init
     - [Carousal](#carousal)
     - [KeyboardAvoidingScrollView](#keyboardavoidingscrollview)
     - [Bottom Sheet](#bottom-sheet)
+    - [Alert](#alert)
+    - [Toast](#toast)
 - [Utils Function](#utils-function)
   - [Random](#random-id-generator-function)
   - [Color Opacity reducer](#color-opacity-reducer-function)
-- [Build App Configuration](#build-app-configuration)
-  - [Generate Apk](#generate-apk)
-  - [Generate ABB](#generate-abb)
-  - [Update Apk](#update-apk)
-  - [Update ABB](#update-abb)
-  - [Change Name](#change-name)
 - [Native Api Mobile](#native-api-mobile)
   - [Audio](#audio)
 
@@ -117,6 +111,31 @@ npx rn-meter setup alias
 ```
 npx rn-meter add piechart1
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { Box, PieChartIndex } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <Box>
+      <PieChartIndex
+        data={[
+          { value: 100, color: "#d61212", label: "label-01" },
+          { value: 200, color: "#d69112", label: "label-02" },
+          { value: 200, color: "#1246d6", label: "label-03" }
+        ]}
+        textTitle="Hello World"
+        textValue="$11431"
+        SIZE={200}
+        BASE_STROKE_WIDTH={25}
+      />
+    </Box>
+  );
+}
+```
+</details>
 
 ## Components
 
@@ -126,34 +145,183 @@ Introducing our comprehensive React Native UI library with customizable themes, 
 ```
 npx rn-meter add box 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { Box } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <Box>
+      <Text style={{ color: 'white' }}>Hello from Box</Text>
+    </Box>
+  );
+}
+```
+</details>
+
 #### Center
 ```
 npx rn-meter add center 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { Center } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <Center>
+      <Text style={{ color: 'white' }}>Hello from center</Text>
+    </Center>
+  );
+}
+```
+</details>
+
 
 #### HStack
 ```
 npx rn-meter add HStack 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { HStack } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <HStack>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from HStack</Text>
+      </Box>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from HStack</Text>
+      </Box>
+    </HStack>
+  );
+}
+```
+</details>
+
+
 
 #### VStack
 ```
 npx rn-meter add VStack 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { VStack } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <VStack>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from VStack</Text>
+      </Box>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from VStack</Text>
+      </Box>
+    </VStack>
+  );
+}
+```
+</details>
+
 
 #### Divider
 ```
 npx rn-meter add divider 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { Divider } from 'rn-meter-component-path';
+
+export default function Example() {
+  return (
+    <Box>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from Divider</Text>
+      </Box>
+      <Divider/>
+      <Box>
+        <Text style={{ color: 'white' }}>Hello from Divider</Text>
+      </Box>
+    </Box>
+  );
+}
+```
+</details>
+
 
 #### Alert
 ```
 npx rn-meter add alert 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { AlertContainer, animatedAlert } from 'rn-meter-component-path';
+
+export default function RootComponent() {
+  return (
+    <Box>
+      <AlertContainer />
+    </Box>
+  );
+}
+```
+```tsx
+animatedAlert.show({
+  message:"Your Message"
+}, (value) => {
+  if(value==="ok") {
+    // write you code
+  }
+  if(value === 'cancel') {
+    // write you code
+  }
+})
+```
+</details>
+
+
+
 #### Toast
 ```
 npx rn-meter add toast 
 ```
+<details>
+<summary>View Example</summary>
+
+```tsx
+import { ToastContainer, animatedToast } from 'rn-meter-component-path';
+
+export default function RootComponent() {
+  return (
+    <Box>
+      <ToastContainer />
+    </Box>
+  );
+}
+```
+```tsx
+animatedToast.show({
+  title: 'User Saved',
+  message: 'You account created successfully', 
+  bgColor: color.success 
+});
+```
+</details>
 
 
 ### From Components
@@ -218,33 +386,6 @@ This function using for reducing color opacity
 npx rn-meter add fn cor
 ```
 
-## Build App Configuration
-**This command is coming soon** 
-
-#### Generate Apk
-```
-npx rn-meter generate apk
-```
-
-#### Generate ABB
-```
-npx rn-meter generate abb
-```
-
-#### Update Apk
-```
-npx rn-meter update apk
-```
-#### Update ABB
-```
-npx rn-meter update abb
-```
-### Change Name
-This Command is only for change your app name
-```
-npx rn-meter change name
-```
-
 ## Native Api Mobile
 
 #### Audio
@@ -266,6 +407,8 @@ npm install react-native-audio-record react-native-permissions react-native-soun
 ```
 npx rn-meter add audio record
 ```
+<details>
+<summary>View Example</summary>
 
 #### Using Example (`App.tsx`)
 ```tsx
@@ -347,7 +490,7 @@ const styles = StyleSheet.create({
 });
  
 ```
-
+</details>
 
 ## Contributing
 

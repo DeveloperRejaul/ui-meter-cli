@@ -71,7 +71,6 @@ export class Setup  extends Audio {
     }
 
 
-
     /**
      * @description this function using for setup eslint , and also vs code config
      * 
@@ -205,27 +204,6 @@ export class Setup  extends Audio {
 
         await this.install('npm install --save-dev babel-plugin-module-resolver')
     } 
-
-    /**
-     *  @description this function using for setup redux toolkit
-     */
-    async rtk () {
-      if(!await this.checkConfigExists()) return;
-      const config = await this.getConfig();
-      const componentsPath = config.path.components as string;
-      const newPath = componentsPath.split(path.sep);
-      newPath.pop()
-      const rtkPath = newPath.join(path.sep).concat(path.sep, "rtk")
-
-        const ans = await inquirer.prompt([
-            {
-                type:"input",
-                message:"Please gave a valid path for writing rtk code",
-                default: rtkPath
-            }
-        ]) 
-    }
-
 
 
     /**
