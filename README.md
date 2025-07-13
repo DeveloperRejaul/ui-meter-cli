@@ -406,7 +406,7 @@ export default function App () {
   </NavigationContainer>
 }
 // Setup step:02
-// add all screen name on created nav file 
+// add all screen name type on created nav file 
 // like this: export type RouteType =  "screen1" | "screen1"
 
 // Use
