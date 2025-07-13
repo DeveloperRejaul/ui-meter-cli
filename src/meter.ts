@@ -8,6 +8,7 @@ import {
     keyboardAvoidingScrollView,
     alert,
     toast,
+    NavRef,
 } from './content';
 import { Core } from 'core/1_core';
 
@@ -104,6 +105,9 @@ export default class Meter extends  Core {
                 break;
             case Commands.random:
                 this.createUtility(random(), 'random');
+                break; 
+            case Commands.Nav:
+                this.createUtility(NavRef(), 'nav');
                 break;
             default:
                 console.log(chalk.red("Hey!, Invalid command executed. Please read documentation :https://www.npmjs.com/package/rn-meter"));

@@ -54,8 +54,9 @@ npx rn-meter init
     - [Alert](#alert)
     - [Toast](#toast)
 - [Utils Function](#utils-function)
-  - [Random](#random-id-generator-function)
+  - [Random UUID](#random-id-generator-function)
   - [Color Opacity reducer](#color-opacity-reducer-function)
+  - [Navigation](#navigation)
 - [Native Api Mobile](#native-api-mobile)
   - [Audio](#audio)
 
@@ -385,6 +386,40 @@ This function using for reducing color opacity
 ```
 npx rn-meter add fn cor
 ```
+
+#### Navigation
+This function using for navigation all functions. we can use this out of the component 
+```
+npx rn-meter add fn nav
+```
+
+<details>
+<summary>View setup and using Example</summary>
+
+```tsx
+// Setup step:01
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from 'Your utils path /nav';
+export default function App () {
+  <NavigationContainer ref={navigationRef}>
+    {/* Your other code */}
+  </NavigationContainer>
+}
+// Setup step:02
+// add all screen name on created nav file 
+// like this: export type RouteType =  "screen1" | "screen1"
+
+// Use
+nav.navigate('screen-name', {"params"})
+nav.push('screen-name', {"params"})
+nav.pop('screen-name', {"params"})
+nav.back('screen-name')
+nav.reset('screen-name', {"params"})
+nav.replace('screen-name', {"params"})
+
+```
+</details>
+
 
 ## Native Api Mobile
 
