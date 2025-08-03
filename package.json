@@ -71,14 +71,16 @@
   ],
   "homepage": "https://github.com/DeveloperRejaul/ui-meter-cli#readme",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "README.md"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DeveloperRejaul/ui-meter-cli.git"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+     "access": "public"
   },
   "dependencies": {
     "chalk": "4.1.2",
