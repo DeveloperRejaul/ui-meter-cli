@@ -1,16 +1,23 @@
 
 export const meterConfig = {
-    colors:{
-        'blue': '#1fb6ff',
-        'purple': '#7e5bef',
-        'pink': '#ff49db',
-        'orange': '#ff7849',
-        'green': '#13ce66',
-        'yellow': '#ffc82c',
-        'gray-dark': '#273444',
-        'gray': '#8492a6',
-        'gray-light': '#d3dce6',
+    colors: {
+    dark: {
+      primary: '#1E88E5',
+      secondary: '#8E24AA',
+      positive: '#43A047',
+      negative: '#D32F2F',
+      error: '#E53935',
+      warning: '#FB8C00',
     },
+    light: {
+      primary: '#2196F3',
+      secondary: '#AB47BC',
+      positive: '#66BB6A',
+      negative: '#E57373',
+      error: '#EF5350',
+      warning: '#FFA726',
+    },
+  },
    fonts:{
         'SpaceMonoRegular': require('./assets/fonts/SpaceMono-Regular.ttf')
     },

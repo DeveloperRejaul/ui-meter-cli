@@ -27,9 +27,6 @@ npx rn-meter init
     - [Vs Code Configuration Setup](#vs-code-configuration-setup)
     - [Setup Alias](#setup-alias)
 
-- [Animations](#animations)
-  - [Chart](#chart)
-    - [Pie Chart](#pie-chart)
 - [Components](#components)
   - [Layout](#layout-components)
     - [Box](#box)
@@ -46,13 +43,19 @@ npx rn-meter init
     - [Radio](#radio)
     - [Switch](#switch)
     - [Input](#input)
-    - [Animated Input](#animated-input)
   - [Helping UI Components](#helping-ui-components)
     - [Carousal](#carousal)
     - [KeyboardAvoidingScrollView](#keyboardavoidingscrollview)
     - [Bottom Sheet](#bottom-sheet)
     - [Alert](#alert)
     - [Toast](#toast)
+    - [Infinity Scroll View](#infinity-scroll-view)
+- [Animations](#animations)
+  - [Components](#components)
+    - [Animated Input](#animated-input)
+  - [Chart](#chart)
+    - [Pie Chart](#pie-chart)
+
 - [Utils Function](#utils-function)
   - [Random UUID](#random-id-generator-function)
   - [Color Opacity reducer](#color-opacity-reducer-function)
@@ -323,6 +326,33 @@ animatedToast.show({
 });
 ```
 </details>
+
+### Infinity Scroll View
+
+```
+npx rn-meter add listview 
+```
+This List View Fully setup on rtk
+<details>
+<summary>View Example</summary>
+
+```tsx
+<ListShow
+  header={{
+    render:(data) => (<Text>data of header</Text>),
+    isScrollable: false,
+  }}
+  query1={useGetDealsDetailsQuery}
+  query2={useLazyGetDealsDetailsQuery} // just for error resolve this functions not call in component
+  renderItem={renderItem}
+  queryParams={{}}
+  selector={(data)=>data?.data?.policies}
+  initialNumToRender={10}
+  contentContainerStyle={{paddingHorizontal: 0, paddingBottom: 100}}
+/>
+```
+</details>
+
 
 
 ### From Components

@@ -14,6 +14,7 @@ export enum Commands {
     CheckBox = "add-checkbox",
     Switch = "add-switch",
     Input = "add-input",
+    ListView = "add-listview",
     AnimatedInput = "add-animated-input",
     Carousal = "add-carousal",
     ButtonSheet = "add-bottom-sheet",

@@ -9,6 +9,7 @@ import {
     alert,
     toast,
     NavRef,
+    listView,
 } from './content';
 import { Core } from 'core/1_core';
 
@@ -58,6 +59,9 @@ export default class Meter extends  Core {
                 break;
             case Commands.Carousal:
                 this.createComponent(cardCarousalContent(), "Carousal")
+                break;
+            case Commands.ListView:
+                this.createComponent(listView(), "ListView")
                 break;
             case Commands.ButtonSheet:
                 this.createComponent(bottomSheet(), "BottomSheet")
