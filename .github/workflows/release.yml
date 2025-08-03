@@ -44,6 +44,11 @@ jobs:
           git tag -f $VERSION
           git push -f origin $VERSION
 
+      - name: 📝 Get Last Commit Message
+        id: release_notes
+        run: |
+          echo "RELEASE_NOTES=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+
       - name: 📢 Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
