@@ -1,4 +1,4 @@
-name: Release & Publish to NPM
+name: 🚀 Auto Release & Publish to NPM
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   release:
+    name: Release and Publish
     runs-on: ubuntu-latest
 
     steps:
@@ -20,28 +21,33 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: 📦 Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: 🛠️ Build Project
         run: npm run build
 
-      - name: 🏷️ Create Version Tag
-        id: tagger
+      - name: 🔖 Read Version from package.json
+        id: version
         run: |
-          version=$(node -p "require('./package.json').version")
-          echo "tag=v$version" >> $GITHUB_ENV
+          echo "VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+          echo "Version: $VERSION"
 
-      - name: 🚀 Create Git Tag & Push
+      - name: 🧠 Ensure on main branch
+        run: |
+          git checkout main
+          git pull origin main
+
+      - name: 🏷️ Create Git Tag & Push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag ${{ env.tag }}
-          git push origin ${{ env.tag }}
+          git tag -f $VERSION
+          git push -f origin $VERSION
 
       - name: 📢 Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.tag }}
+          tag_name: ${{ env.VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
