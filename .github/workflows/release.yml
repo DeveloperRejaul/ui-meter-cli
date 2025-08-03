@@ -44,15 +44,19 @@ jobs:
           git tag -f $VERSION
           git push -f origin $VERSION
 
-      - name: 📝 Get Last Commit Message
+      - name: 📝 Get full last commit message (with markdown)
         id: release_notes
         run: |
-          echo "RELEASE_NOTES=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          git log -1 --pretty=format:%B >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: 📢 Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          body: ${{ env.RELEASE_NOTES }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
