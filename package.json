@@ -1,5 +1,5 @@
 {
-  "name": "@developerrejaul/-meter",
+  "name": "rn-meter",
   "version": "3.1.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
