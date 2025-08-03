@@ -1,0 +1,51 @@
+name: Release & Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🟨 Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 📦 Install Dependencies
+        run: npm install
+
+      - name: 🛠️ Build Project
+        run: npm run build
+
+      - name: 🏷️ Create Version Tag
+        id: tagger
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "tag=v$version" >> $GITHUB_ENV
+
+      - name: 🚀 Create Git Tag & Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ env.tag }}
+          git push origin ${{ env.tag }}
+
+      - name: 📢 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚚 Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
