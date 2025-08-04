@@ -342,14 +342,77 @@ This List View Fully setup on rtk
     render:(data) => (<Text>data of header</Text>),
     isScrollable: false,
   }}
-  query1={useGetDealsDetailsQuery}
-  query2={useLazyGetDealsDetailsQuery} // just for error resolve this functions not call in component
+  query1={useGetPostsQuery}
+  query2={useLazyGetPostsByPageQuery} // this is for pagination
   renderItem={renderItem}
   queryParams={{}}
   selector={(data)=>data?.data?.policies}
   initialNumToRender={10}
   contentContainerStyle={{paddingHorizontal: 0, paddingBottom: 100}}
 />
+```
+
+```tsx
+// rtk api example
+// base api 
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+export const api = createApi({
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
+  endpoints: () => ({}),
+});
+
+export const homeApi = api.injectEndpoints({
+  overrideExisting: true,
+  endpoints: (build) => ({
+    /**
+     * Fetches the first 10 posts from JSONPlaceholder.
+     *
+     * @returns {ApiResponse<PostItem[]>}
+     */
+    getPosts: build.query<ApiResponse<PostItem[]>, {}>({
+      query: () => '/posts?_page=1&_limit=10',
+      transformResponse: (response: PostItem[]): ApiResponse<PostItem[]> => ({
+        status: 'success',
+        body: response,
+      }),
+    }),
+
+    /**
+     * Fetches paginated posts and appends them to the getPosts cache.
+     *
+     * @param {page, limit} - Page number and limit for pagination.
+     * @returns {ApiResponse<PostItem[]>}
+     */
+    getPostsByPage: build.query<ApiResponse<PostItem[]>, { page: number; limit: number }>({
+      query: ({ page = 1, limit = 10 }) => `/posts?_page=${page}&_limit=${limit}`,
+      transformResponse: (response: PostItem[]): ApiResponse<PostItem[]> => ({
+        status: 'success',
+        body: response,
+      }),
+      async onQueryStarted(queryArg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            homeApi.util.updateQueryData('getPosts', {}, (draft) => {
+              if (data?.body && draft?.body && queryArg.page > 1) {
+                draft.body.push(...data.body);
+              }
+            }),
+          );
+        } catch (err) {
+          console.error('Pagination error:', err);
+        }
+      },
+    }),
+
+  })
+})
+export const {
+  useGetPostsQuery,
+  useLazyGetPostsByPageQuery
+} = homeApi;
 ```
 </details>
 
